@@ -22,14 +22,21 @@ export default function ContactFinale() {
 
   const submit = async (e) => {
     e.preventDefault()
-    const f = new FormData(e.currentTarget)
+    const form = e.currentTarget
+    const f = new FormData(form)
     const data = { name: f.get('name'), email: f.get('email'), topics: topics.join(', ') || 'Not specified', message: f.get('message') }
     if (CONFIG.formEndpoint) {
       setStatus('sending')
       try {
-        const r = await fetch(CONFIG.formEndpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(data) })
-        setStatus(r.ok ? 'sent' : 'error')
-        if (r.ok) e.target.reset()
+        const r = await fetch(CONFIG.formEndpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify({ ...data, _subject: `New project brief: ${data.name}` }) })
+        const res = await r.json().catch(() => ({}))
+        // FormSubmit answers 200 with success "false" when it rejects a message
+        const ok = r.ok && String(res.success) !== 'false'
+        setStatus(ok ? 'sent' : 'error')
+        if (ok) {
+          form.reset()
+          setTopics([])
+        }
       } catch {
         setStatus('error')
       }
@@ -136,7 +143,7 @@ export default function ContactFinale() {
               Send brief <Icon name="send" className="h-4 w-4" />
             </MagneticButton>
             <p role="status" aria-live="polite" className="text-sm text-slate-400">
-              {message || `Goes straight to ${CONFIG.email}`}
+              {message || 'We reply within one business day.'}
             </p>
           </div>
         </motion.form>
