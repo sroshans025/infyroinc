@@ -41,14 +41,14 @@ export default function Testimonials() {
         >
           <figure key={i} className="relative animate-pop rounded-3xl border border-white/10 bg-gradient-to-br from-navy-800 to-ink p-8 shadow-2xl sm:p-12">
             <Icon name="quote" className="absolute right-8 top-8 h-12 w-12 text-brand/25" />
-            <div className="flex gap-1 text-amber-300" aria-label="5 out of 5 stars">
+            <div className="flex gap-1 text-brand-300" aria-label="5 out of 5 stars">
               {Array.from({ length: 5 }).map((_, k) => (
                 <Icon key={k} name="star" className="h-5 w-5 fill-current" />
               ))}
             </div>
             <blockquote className="mt-6 font-display text-xl font-semibold leading-relaxed text-white sm:text-2xl">&ldquo;{t.text}&rdquo;</blockquote>
             <figcaption className="mt-8 flex items-center gap-4">
-              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-cyan-400 font-display font-bold text-white">{t.avatar}</span>
+              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-brand-300 font-display font-bold text-white">{t.avatar}</span>
               <span>
                 <span className="block font-semibold text-white">{t.name}</span>
                 <span className="text-sm text-slate-400">

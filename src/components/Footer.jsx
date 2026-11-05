@@ -30,7 +30,7 @@ export default function Footer() {
               to="/careers"
               className="mt-5 inline-flex items-center gap-2 rounded-full border border-brand-400/40 bg-brand/10 px-4 py-1.5 text-xs font-semibold text-brand-200 transition hover:bg-brand/20"
             >
-              🎓 Internship Program Open
+              Internship program open
             </Link>
             {social.length > 0 && (
               <div className="mt-6 flex gap-2">

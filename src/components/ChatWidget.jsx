@@ -47,7 +47,7 @@ export default function ChatWidget() {
           <div className="flex items-center gap-3 bg-gradient-to-r from-brand-700 to-brand px-4 py-3.5 text-white">
             <span className="relative flex h-9 w-9 items-center justify-center rounded-full bg-white/20">
               <Icon name="chat" className="h-5 w-5" />
-              <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full border-2 border-brand-700 bg-emerald-400" />
+              <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full border-2 border-brand-700 bg-brand-300" />
             </span>
             <div className="leading-tight">
               <div className="font-display text-sm font-bold">INFYRO Support</div>

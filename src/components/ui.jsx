@@ -21,54 +21,15 @@ export function SectionHead({ eyebrow, title, text, center = true, className = '
   )
 }
 
-export function Logo() {
+export function Logo({ className = 'h-9' }) {
   return (
-    <Link to="/" className="group flex shrink-0 items-center gap-2.5" aria-label="INFYRO home">
-      <svg viewBox="0 0 32 32" className="h-9 w-9" aria-hidden="true">
-        <rect width="32" height="32" rx="8" fill="#2563EB" />
-        <path d="M9 22V10h3v12zM15 22V10h3l5 7.5V10h3v12h-3l-5-7.5V22z" fill="#fff" />
-      </svg>
-      <span className="flex flex-col leading-none">
-        <span className="font-display text-xl font-extrabold tracking-wide text-white">INFYRO</span>
-        <span className="mt-1 text-[10px] font-medium uppercase tracking-[0.2em] text-slate-400">Technology Solutions</span>
-      </span>
+    <Link to="/" className="flex shrink-0 items-center rounded-md focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400" aria-label="INFYRO home">
+      <img src="/logo-light.png" alt="INFYRO" width="483" height="165" className={`${className} w-auto`} />
     </Link>
   )
 }
 
-const base =
-  'inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2 focus-visible:ring-offset-ink'
-const sizes = { md: 'px-5 py-2.5 text-sm', lg: 'px-7 py-3.5 text-base' }
-const variants = {
-  primary: 'bg-brand text-white shadow-glow hover:bg-brand-500',
-  ghost: 'border border-white/20 bg-white/5 text-white backdrop-blur hover:bg-white/10',
-  white: 'bg-white text-brand-700 shadow-soft hover:bg-brand-50',
-}
-
-// Renders a router link (`to`), a plain anchor (`href`) or a button.
-export function Button({ to, href, onClick, variant = 'primary', size = 'md', className = '', children, ...rest }) {
-  const cls = `${base} ${sizes[size]} ${variants[variant]} ${className}`
-  if (to) {
-    return (
-      <Link to={to} onClick={onClick} className={cls} {...rest}>
-        {children}
-      </Link>
-    )
-  }
-  if (href) {
-    const external = /^https?:/.test(href)
-    return (
-      <a href={href} onClick={onClick} className={cls} {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})} {...rest}>
-        {children}
-      </a>
-    )
-  }
-  return (
-    <button type="button" onClick={onClick} className={cls} {...rest}>
-      {children}
-    </button>
-  )
-}
+export { Button } from './ui/button.jsx'
 
 export function Arrow({ className = 'h-4 w-4' }) {
   return <Icon name="arrow" className={className} strokeWidth={2.2} />

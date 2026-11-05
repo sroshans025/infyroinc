@@ -2,16 +2,14 @@
 
 export const NAV = [
   { to: '/', label: 'Home', end: true },
-  { to: '/about', label: 'About' },
-  { to: '/services', label: 'Services' },
-  { to: '/projects', label: 'Projects' },
-  { to: '/careers', label: 'Careers' },
+  { to: '/about', label: 'About', primary: true },
+  { to: '/services', label: 'Services', primary: true },
+  { to: '/projects', label: 'Projects', primary: true },
+  { to: '/careers', label: 'Careers', primary: true },
   { to: '/hackathon-2026', label: 'Hackathon 2026' },
   { to: '/icsi-2026', label: 'ICSI 2026' },
-  { to: '/contact', label: 'Contact' },
+  { to: '/contact', label: 'Contact', primary: true },
 ]
-
-export const ROTATING = ['Custom Software', 'Mobile Apps', 'Cloud Platforms', 'AI & Automation', 'Business Intelligence']
 
 export const SUBJECTS = ['New Project Inquiry', 'IT Consulting', 'Technical Support', 'Partnership Opportunity', 'Career / Internship', 'General Inquiry']
 

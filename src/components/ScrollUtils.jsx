@@ -43,7 +43,7 @@ export default function ScrollUtils() {
   return (
     <>
       <div aria-hidden="true" className="fixed inset-x-0 top-0 z-[65] h-[3px] bg-transparent">
-        <div className="h-full bg-gradient-to-r from-brand-400 to-cyan-300" style={{ width: `${pct}%` }} />
+        <div className="h-full bg-gradient-to-r from-brand-400 to-brand-200" style={{ width: `${pct}%` }} />
       </div>
       <a
         href="#top"
