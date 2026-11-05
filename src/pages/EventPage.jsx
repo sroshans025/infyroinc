@@ -25,7 +25,7 @@ export default function EventPage({ event: e }) {
             <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-white">
               <Icon name="globe" className="h-4 w-4 text-brand-300" /> Online
             </span>
-            {past && <span className="rounded-full bg-amber-400/15 px-4 py-2 text-sm font-semibold text-amber-300">Event completed</span>}
+            {past && <span className="rounded-full bg-brand-300/15 px-4 py-2 text-sm font-semibold text-brand-300">Event completed</span>}
           </div>
           <Button to={enquiry} size="lg">
             {past ? 'Ask about the next edition' : 'Enquire now'} <Arrow />

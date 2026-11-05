@@ -15,23 +15,7 @@
 }
 
 @layer components {
-  /* Scroll reveal. The class is only added once JS runs, so content is never hidden without it */
-  .reveal {
-    opacity: 0;
-    transform: translateY(18px);
-    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-    transition-delay: var(--d, 0ms);
-  }
-  .reveal.is-in {
-    opacity: 1;
-    transform: none;
-  }
   @media (prefers-reduced-motion: reduce) {
-    .reveal {
-      opacity: 1;
-      transform: none;
-      transition: none;
-    }
     html {
       scroll-behavior: auto;
     }
@@ -43,7 +27,7 @@
     @apply bg-ink text-slate-300;
   }
   ::selection {
-    background: rgba(59, 130, 246, 0.4);
+    background: rgba(27, 131, 242, 0.4);
     color: #fff;
   }
 }
@@ -58,7 +42,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(59, 130, 246, 0.2), transparent 45%);
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(27, 131, 242, 0.2), transparent 45%);
     opacity: 0;
     transition: opacity 0.3s;
     pointer-events: none;
@@ -66,20 +50,24 @@
   .spot:hover::before {
     opacity: 1;
   }
-  .glass {
-    @apply border border-white/10 bg-white/[0.04] backdrop-blur;
-  }
   .gradient-text {
-    @apply bg-gradient-to-r from-brand-400 via-sky-300 to-cyan-200 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-brand-400 via-brand-300 to-brand-200 bg-clip-text text-transparent;
   }
   .dots {
-    background-image: radial-gradient(rgba(96, 165, 250, 0.18) 1px, transparent 1px);
+    background-image: radial-gradient(rgba(76,156,245, 0.18) 1px, transparent 1px);
     background-size: 30px 30px;
   }
-  .scrollbar-none {
-    scrollbar-width: none;
+}
+
+@layer components {
+  /* Faint film grain for the hero. Inline SVG noise, no extra request */
+  .grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.07;
+    mix-blend-mode: soft-light;
   }
-  .scrollbar-none::-webkit-scrollbar {
-    display: none;
+  .hero-grid {
+    background-image: radial-gradient(rgba(123,180,247, 0.16) 1px, transparent 1px);
+    background-size: 32px 32px;
   }
 }

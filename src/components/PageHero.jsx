@@ -6,7 +6,7 @@ export default function PageHero({ eyebrow, title, accent, text, children }) {
   return (
     <section className="relative isolate overflow-hidden border-b border-white/10 bg-navy">
       <div aria-hidden="true" className="absolute -left-32 -top-32 -z-10 h-[420px] w-[420px] animate-glow rounded-full bg-brand/40 blur-[120px] motion-reduce:animate-none" />
-      <div aria-hidden="true" className="absolute -right-24 bottom-0 -z-10 h-[320px] w-[320px] animate-glow rounded-full bg-sky-500/20 blur-[110px] [animation-delay:2s] motion-reduce:animate-none" />
+      <div aria-hidden="true" className="absolute -right-24 bottom-0 -z-10 h-[320px] w-[320px] animate-glow rounded-full bg-brand-400/20 blur-[110px] [animation-delay:2s] motion-reduce:animate-none" />
       <div aria-hidden="true" className="dots absolute inset-0 -z-10 [mask-image:radial-gradient(ellipse_70%_90%_at_50%_30%,black,transparent_80%)]" />
       <ParticleField className="-z-10 opacity-60" density={14000} />
       <Container className="relative py-20 text-center sm:py-28">

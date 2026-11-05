@@ -55,7 +55,7 @@ export default function ParticleField({ className = '', density = 9500 }) {
         }
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
-        ctx.fillStyle = 'rgba(147,197,253,0.85)'
+        ctx.fillStyle = 'rgba(123,180,247,0.85)'
         ctx.fill()
         for (let j = i + 1; j < parts.length; j++) {
           const q = parts[j]
@@ -63,7 +63,7 @@ export default function ParticleField({ className = '', density = 9500 }) {
           const dy = p.y - q.y
           const d = dx * dx + dy * dy
           if (d < 14000) {
-            ctx.strokeStyle = `rgba(96,165,250,${(1 - d / 14000) * 0.32})`
+            ctx.strokeStyle = `rgba(76,156,245,${(1 - d / 14000) * 0.32})`
             ctx.lineWidth = 1
             ctx.beginPath()
             ctx.moveTo(p.x, p.y)
@@ -75,7 +75,7 @@ export default function ParticleField({ className = '', density = 9500 }) {
         const my = p.y - mouse.y
         const md = mx * mx + my * my
         if (md < 30000) {
-          ctx.strokeStyle = `rgba(125,211,252,${(1 - md / 30000) * 0.55})`
+          ctx.strokeStyle = `rgba(173,209,250,${(1 - md / 30000) * 0.55})`
           ctx.beginPath()
           ctx.moveTo(p.x, p.y)
           ctx.lineTo(mouse.x, mouse.y)

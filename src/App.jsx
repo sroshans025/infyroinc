@@ -1,17 +1,18 @@
+import { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import ChatWidget from './components/ChatWidget.jsx'
 import Footer from './components/Footer.jsx'
 import Header from './components/Header.jsx'
 import ScrollUtils from './components/ScrollUtils.jsx'
 import { EVENTS } from './data.js'
-import About from './pages/About.jsx'
-import Careers from './pages/Careers.jsx'
-import Contact from './pages/Contact.jsx'
-import EventPage from './pages/EventPage.jsx'
+const About = lazy(() => import('./pages/About.jsx'))
+const Careers = lazy(() => import('./pages/Careers.jsx'))
+const Contact = lazy(() => import('./pages/Contact.jsx'))
+const EventPage = lazy(() => import('./pages/EventPage.jsx'))
 import Home from './pages/Home.jsx'
-import NotFound from './pages/NotFound.jsx'
-import Projects from './pages/Projects.jsx'
-import Services from './pages/Services.jsx'
+const NotFound = lazy(() => import('./pages/NotFound.jsx'))
+const Projects = lazy(() => import('./pages/Projects.jsx'))
+const Services = lazy(() => import('./pages/Services.jsx'))
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
       <ScrollUtils />
       <Header />
       <main id="main" className="pt-[68px]">
+        <Suspense fallback={<div className="min-h-[60vh]" />}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -38,6 +40,7 @@ export default function App() {
           <Route path="/icsi-2026" element={<EventPage event={EVENTS.icsi} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </Suspense>
       </main>
       <Footer />
       <ChatWidget />

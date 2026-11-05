@@ -29,7 +29,7 @@ export default function ProcessStepper() {
         <div className="mx-auto mt-16 max-w-5xl">
           <div className="relative">
             <div aria-hidden="true" className="absolute left-[12.5%] right-[12.5%] top-7 h-0.5 bg-white/10">
-              <div className="h-full bg-gradient-to-r from-brand-400 to-cyan-300 transition-all duration-700" style={{ width: `${(i / (STEPS.length - 1)) * 100}%` }} />
+              <div className="h-full bg-gradient-to-r from-brand-400 to-brand-200 transition-all duration-700" style={{ width: `${(i / (STEPS.length - 1)) * 100}%` }} />
             </div>
             <div role="tablist" aria-label="Delivery process" className="relative grid grid-cols-4">
               {STEPS.map((x, n) => (

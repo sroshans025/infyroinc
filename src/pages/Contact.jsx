@@ -36,7 +36,7 @@ function Field({ id, label, required, error, children }) {
       </label>
       {children}
       {error && (
-        <p id={`${id}-err`} className="mt-1.5 text-sm text-red-400">
+        <p id={`${id}-err`} className="mt-1.5 text-sm text-brand-200">
           {error}
         </p>
       )}
@@ -170,7 +170,7 @@ export default function Contact() {
               >
                 <Icon name="send" className="h-5 w-5" /> {status === 'sending' ? 'Sending...' : 'Send Message'}
               </button>
-              <p role="status" aria-live="polite" className={`mt-4 text-sm ${status === 'error' ? 'text-red-400' : 'text-slate-300'}`}>
+              <p role="status" aria-live="polite" className={`mt-4 text-sm ${status === 'error' ? 'text-brand-200' : 'text-slate-300'}`}>
                 {STATUS[status] || (CONFIG.formEndpoint ? '' : `Sends directly to ${CONFIG.email}`)}
               </p>
             </form>

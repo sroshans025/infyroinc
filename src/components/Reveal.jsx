@@ -1,30 +1,19 @@
-import { useEffect, useRef, useState } from 'react'
+import { motion } from 'framer-motion'
+
+const TAGS = { div: motion.div, li: motion.li, section: motion.section, article: motion.article, p: motion.p }
 
 // Fades and lifts its children into view once they scroll on screen.
-export default function Reveal({ as: Tag = 'div', delay = 0, className = '', children, ...rest }) {
-  const ref = useRef(null)
-  const [armed, setArmed] = useState(false)
-  const [shown, setShown] = useState(false)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el || !('IntersectionObserver' in window)) return
-    setArmed(true)
-    const obs = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
-          setShown(true)
-          obs.disconnect()
-        }
-      },
-      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
-    )
-    obs.observe(el)
-    return () => obs.disconnect()
-  }, [])
-
+export default function Reveal({ as = 'div', delay = 0, className = '', children, ...rest }) {
+  const Tag = TAGS[as] || motion.div
   return (
-    <Tag ref={ref} style={{ '--d': `${delay}ms` }} className={`${armed ? 'reveal' : ''} ${shown ? 'is-in' : ''} ${className}`} {...rest}>
+    <Tag
+      initial={{ opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.12, margin: '0px 0px -40px 0px' }}
+      transition={{ duration: 0.7, delay: delay / 1000, ease: [0.22, 1, 0.36, 1] }}
+      className={className}
+      {...rest}
+    >
       {children}
     </Tag>
   )
