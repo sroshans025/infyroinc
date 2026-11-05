@@ -9,9 +9,10 @@ export const CONFIG = {
   hours: 'Mon–Fri 9am–5pm · Sat 9am–2pm IST',
   mapsUrl: 'https://maps.google.com/?q=Tiruchirappalli+Tamil+Nadu',
 
-  // Optional: a form endpoint (Formspree, Getform, your own API...). The contact form POSTs JSON here.
-  // If empty, the form opens the visitor's email app addressed to `email`.
-  formEndpoint: '',
+  // Contact forms POST JSON here. FormSubmit forwards each submission to `email` with no account needed;
+  // the very first submission triggers a one-time activation email to that inbox.
+  // Swap for Formspree/Getform/your own API at any time. If empty, forms fall back to opening the visitor's email app.
+  formEndpoint: 'https://formsubmit.co/ajax/info@infyroinc.com',
 
   social: {
     linkedin: 'https://www.linkedin.com/company/infyrosolutions/',

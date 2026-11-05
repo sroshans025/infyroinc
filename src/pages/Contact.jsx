@@ -77,9 +77,11 @@ export default function Contact() {
         const r = await fetch(CONFIG.formEndpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify(v),
+          body: JSON.stringify({ ...v, _subject: `Website enquiry: ${v.subject}` }),
         })
-        if (!r.ok) throw new Error('bad status')
+        const res = await r.json().catch(() => ({}))
+        // FormSubmit answers 200 with success "false" when it rejects a message
+        if (!r.ok || String(res.success) === 'false') throw new Error('rejected')
         setStatus('sent')
         setV((s) => ({ ...s, name: '', email: '', phone: '', company: '', message: '' }))
       } catch {
