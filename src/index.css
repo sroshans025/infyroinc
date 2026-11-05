@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-white font-sans text-slate-700 antialiased;
+  }
+  section[id] {
+    scroll-margin-top: 72px;
+  }
+}
+
+@layer components {
+  /* Scroll reveal. The class is only added once JS runs, so content is never hidden without it */
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+    transition-delay: var(--d, 0ms);
+  }
+  .reveal.is-in {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-ink text-slate-300;
+  }
+  ::selection {
+    background: rgba(59, 130, 246, 0.4);
+    color: #fff;
+  }
+}
+
+@layer components {
+  /* Cursor-follow glow on cards. Set --mx / --my from JS (see SpotlightCard) */
+  .spot {
+    position: relative;
+    overflow: hidden;
+  }
+  .spot::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(59, 130, 246, 0.2), transparent 45%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  .spot:hover::before {
+    opacity: 1;
+  }
+  .glass {
+    @apply border border-white/10 bg-white/[0.04] backdrop-blur;
+  }
+  .gradient-text {
+    @apply bg-gradient-to-r from-brand-400 via-sky-300 to-cyan-200 bg-clip-text text-transparent;
+  }
+  .dots {
+    background-image: radial-gradient(rgba(96, 165, 250, 0.18) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
