@@ -1,49 +1,65 @@
-# INFYRO website
+# Infyro Inc. — website
 
-Official website of INFYRO Technology Solutions. Single-page React app with a few supporting routes
-(Projects, Services, About, Careers, events, Contact).
+Marketing site for **Infyro Inc.** and its three companies: Infyro Technologies, Infyro Studios and Infyro Construction.
+React 18 (Vite) · Tailwind CSS · Framer Motion · React Router · lucide-react.
 
-**Stack:** Vite, React 18, React Router 6, Tailwind CSS 3, shadcn/ui (Radix), Magic UI, Framer Motion, Lucide icons.
+## Run it
 
-## Run
+```bash
+npm install
+npm run dev       # http://localhost:5173
+npm run build     # production build -> dist/
+npm run preview   # serve the build locally
+```
 
-    npm install
-    npm run dev        # local development on http://localhost:5173
-    npm run build      # production build in /dist
-    npm run preview    # serve the production build locally
+## Routes
 
-## Edit content
+| Route | Page |
+|---|---|
+| `/` | Infyro Inc. — interactive logo hero, companies, about, vision & mission, values, why Infyro, contact |
+| `/technologies` | About · six pillars · academic training · corporate training · careers · contact |
+| `/technologies/internships` | Internship intro, **Apply Now** (Google Form) and enquiry |
+| `/studios` | About · services · booking (email) · contact |
+| `/construction` | About · services · booking (email) · contact |
+| `*` | 404 |
 
-| What | Where |
-| --- | --- |
-| Email, phone, address, stats, form endpoint | `src/config.js` |
-| Services, projects, process, FAQ, careers, events | `src/data.js` |
-| Hero copy, build-panel scripts, tech strip | `src/data/hero.js` |
-| Home section order, manifesto, tech groups | `src/data/home.js`, `src/pages/Home.jsx` |
-| Colours (logo palette only) and font | `tailwind.config.js` |
-| Logo and favicon | `public/logo-light.png`, `public/favicon.png` |
+Old URLs `/technologies/academic-training`, `/corporate-training`, `/careers`, `/contact` redirect to the matching section
+(`?type=` is kept, so `/technologies?type=corporate#contact` pre-selects the enquiry type).
 
-## Structure
+## Where things live
 
-    src/pages/            route pages (Home is the single-page experience)
-    src/sections/hero/    hero: live build panel, particle field, rotating word, magnetic CTA
-    src/sections/home/    home sections: About, Capabilities, Services, Technologies, Work, Process, Why, Contact
-    src/components/ui/    shadcn components (button, sheet, accordion)
-    src/components/magicui/  Magic UI components (marquee, number ticker, border beam)
+```
+src/
+├─ data/         all copy and links — edit these, not the JSX
+│  ├─ contact.js    phone, email, address, per-company social profiles, form endpoint
+│  ├─ links.js      internship application Google Form
+│  ├─ footer.js  navigation.js  seo.js  brands.js
+│  └─ inc.js  tech.js  studios.js  construction.js   page content
+├─ components/   brand (logo mark) · precision (design motifs) · hero · company (page template)
+│                layout (navbar, switcher, transitions) · footer · forms · ui · motion
+├─ pages/        Home, technologies/{Overview,Internships}, Studios, Construction, NotFound
+└─ styles/index.css   design tokens and type scale
+public/          favicon.svg + PNG icons, site.webmanifest, robots.txt, sitemap.xml
+```
 
-## Brand rules
+## Contact details & forms
 
-Colours come only from the logo: blue `#1B83F2`, navy `#041020`, white, and mixes of those three.
-Typography is San Francisco via the system font stack, with Inter as the fallback on non-Apple devices.
+- Phone **+91 84389 38918**, email **info@infyroinc.com**, location **Tiruchirappalli, Tamil Nadu, India** — all in `src/data/contact.js`.
+- Social profiles are per company (`SOCIAL_BY_BRAND` in `contact.js`); a missing profile is simply hidden.
+- Studios and Construction **booking buttons** open an email to info@infyroinc.com.
+- The three **enquiry forms** POST JSON to [FormSubmit](https://formsubmit.co) (`src/components/forms/submit.js`) and include a hidden spam honeypot.
+  **One-time setup:** FormSubmit emails an *Activate Form* link to info@infyroinc.com on the first submission — click it once.
+  To use another service (Web3Forms, Formspree, …) set `VITE_FORM_ENDPOINT` or replace `submitEnquiry()`.
 
-## Contact form
+## Deploy on Vercel
 
-Without configuration, "Send brief" opens the visitor's email app addressed to `config.email`.
-Set `formEndpoint` in `src/config.js` (Formspree, Getform or your own API) to send in-page.
+1. Push to GitHub, then import the repo in Vercel (framework preset **Vite**, build `npm run build`, output `dist`).
+2. Optional: set `VITE_FORM_ENDPOINT` (see `.env.example`).
+3. `vercel.json` rewrites every route to `index.html`, so refreshing any page works. (`netlify.toml` / `public/_redirects` do the same on Netlify.)
+4. After deploying: submit one test enquiry and activate FormSubmit (see above).
 
-## Deploy
+## Still to supply
 
-Both hosts are preconfigured with the SPA fallback to `index.html`:
-
-- **Vercel:** `vercel.json`. Import the repo, or run `npx vercel --prod`.
-- **Netlify:** `netlify.toml`. Import the repo, or run `npx netlify deploy --prod`.
+Real photography for Studios and Construction (those pages use designed visuals until then — set `image` in `src/data/studios.js` / `construction.js`),
+legal pages (Privacy, Terms, …), internship programme details (shared on request), an X/Twitter profile, and group-level (Infyro Inc.) social accounts — the group currently shows the Technologies profiles.
+Search the code for `TODO` for the full list.

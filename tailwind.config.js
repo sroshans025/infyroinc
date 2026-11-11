@@ -1,120 +1,77 @@
-import animate from "tailwindcss-animate"
-
 /** @type {import('tailwindcss').Config} */
+import plugin from 'tailwindcss/plugin'
 
-// Palette is taken from the INFYRO logo only: blue #1B83F2, navy #041020, white.
-// Every other shade below is a mix of those three, so nothing foreign enters the UI.
+// Design tokens — docs/FINAL-INFYRO-WEBSITE-SPEC.md §2 ("Precision" language)
 export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
+  // hover: utilities only apply on devices that can hover (no stuck hover states on touch) — §9
+  future: { hoverOnlyWhenSupported: true },
   theme: {
     extend: {
       colors: {
+        blue: { DEFAULT: '#0A78F2', 600: '#0063D1', 300: '#3B95F5', 50: '#EAF3FE' },
+        navy: '#0A1428',
+        ink: { DEFAULT: '#0A1428', 2: '#3A4356' },
+        muted: '#6B7280',
+        subtle: '#8B93A1',
+        paper: { DEFAULT: '#FFFFFF', 2: '#F6F8FB' },
+        line: 'rgba(10,120,242,0.12)',
+        'line-strong': 'rgba(10,120,242,0.35)',
+        hairline: '#E3E8F0',
+        surface: '#F6F8FB',
+        night: '#0A1428',
+        cinema: '#0B0B0C',
+        motif: 'var(--motif)',
         brand: {
-          DEFAULT: '#1B83F2',
-          50: '#EDF5FE',
-          100: '#D6E8FD',
-          200: '#ADD1FA',
-          300: '#7BB4F7',
-          400: '#4C9CF5',
-          500: '#3B91F3',
-          600: '#1B83F2',
-          700: '#1668C0',
-          800: '#114E90',
-          900: '#0B345F',
-        },
-        ink: '#041020',
-        navy: {
-          DEFAULT: '#071A30',
-          800: '#0A2340',
-          700: '#0F2F54',
-        },
-        paper: '#EDF5FE',
-        // Neutral text/border shades: navy mixed toward white
-        slate: {
-          50: '#F3F6FA',
-          100: '#E4EAF2',
-          200: '#C9D3E0',
-          300: '#AEBBCC',
-          400: '#8D9CB1',
-          500: '#6D7E96',
-          600: '#4F6079',
-          700: '#344760',
-          800: '#1B2C44',
-          900: '#0B1B30',
+          DEFAULT: 'var(--brand)',
+          hover: 'var(--brand-hover)',
+          tint: 'var(--brand-tint)',
+          ink: 'var(--brand-ink)',
+          'ink-hover': 'var(--brand-ink-hover)',
         },
       },
-      // One typeface across the whole site: San Francisco via the system font stack (Apple devices). Inter is the web fallback elsewhere, since SF cannot be self-hosted. `display` and `mono` are aliases so existing classes keep working.
       fontFamily: {
-        sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"SF Pro Text"', 'Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        display: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"SF Pro Text"', 'Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        mono: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"SF Pro Text"', 'Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono Variable"', 'ui-monospace', '"SF Mono"', 'Menlo', 'Consolas', 'monospace'],
+        sans: ['"Inter Variable"', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
       },
-      transitionTimingFunction: {
-        expo: 'cubic-bezier(0.22, 1, 0.36, 1)',
-      },
-      keyframes: {
-        cue: {
-          '0%': { transform: 'translateY(-100%)' },
-          '100%': { transform: 'translateY(100%)' },
-        },
-        float: {
-          '0%,100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-12px)' },
-        },
-        fadeUp: {
-          '0%': { opacity: '0', transform: 'translateY(14px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-        glow: {
-          '0%,100%': { opacity: '0.55' },
-          '50%': { opacity: '0.9' },
-        },
-        marquee: {
-          from: { transform: 'translateX(0)' },
-          to: { transform: 'translateX(calc(-100% - var(--gap)))' },
-        },
-        'marquee-reverse': {
-          from: { transform: 'translateX(calc(-100% - var(--gap)))' },
-          to: { transform: 'translateX(0)' },
-        },
-        pop: {
-          '0%': { opacity: '0', transform: 'translateY(10px) scale(.97)' },
-          '100%': { opacity: '1', transform: 'none' },
-        },
-        bar: {
-          '0%': { transform: 'scaleX(0)' },
-          '100%': { transform: 'scaleX(1)' },
-        },
-        'accordion-down': {
-          from: { height: '0' },
-          to: { height: 'var(--radix-accordion-content-height)' },
-        },
-        'accordion-up': {
-          from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: '0' },
-        },
-      },
-      animation: {
-        cue: 'cue 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite',
-        float: 'float 6s ease-in-out infinite',
-        'float-slow': 'float 8s ease-in-out infinite',
-        'fade-up': 'fadeUp .7s ease-out both',
-        glow: 'glow 6s ease-in-out infinite',
-        bar: 'bar 1.2s cubic-bezier(.2,.8,.2,1) both',
-        // Magic UI marquee: duration and gap come from CSS variables set on the component
-        marquee: 'marquee var(--duration, 40s) linear infinite',
-        'marquee-reverse': 'marquee-reverse var(--duration, 40s) linear infinite',
-        pop: 'pop .35s ease-out both',
-        'accordion-down': 'accordion-down 0.25s ease-out',
-        'accordion-up': 'accordion-up 0.25s ease-out',
+      borderRadius: {
+        card: '12px',
+        input: '10px',
+        media: '16px',
+        xl2: '24px',
       },
       boxShadow: {
-        soft: '0 10px 30px -12px rgba(4, 16, 32, 0.4)',
-        glow: '0 20px 60px -20px rgba(27, 131, 242, 0.55)',
-        panel: '0 50px 90px -40px rgba(27, 131, 242, 0.55), 0 18px 40px -24px rgba(4, 16, 32, 0.9)',
-        cta: '0 12px 32px -12px rgba(27, 131, 242, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+        card: '0 1px 2px rgba(10,20,40,.04), 0 12px 32px -12px rgba(10,20,40,.14)',
+        float: '0 24px 64px -16px rgba(10,20,40,.22)',
+        lift: '0 18px 40px -18px rgba(10,120,242,.45)',
+      },
+      transitionTimingFunction: {
+        apple: 'cubic-bezier(0.22, 1, 0.36, 1)',
+      },
+      keyframes: {
+        kenburns: { from: { transform: 'scale(1)' }, to: { transform: 'scale(1.05)' } },
+        floaty: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-4px)' } },
+        scan: { '0%': { transform: 'translateY(0)', opacity: '0' }, '10%': { opacity: '1' }, '85%': { opacity: '1' }, '100%': { transform: 'translateY(100svh)', opacity: '0' } },
+        spinslow: { to: { transform: 'rotate(360deg)' } },
+        blink: { '0%, 49%': { opacity: '1' }, '50%, 100%': { opacity: '0.2' } },
+        pulsenode: { '0%, 100%': { opacity: '0.35' }, '50%': { opacity: '1' } },
+        trace: { from: { strokeDashoffset: '100' }, to: { strokeDashoffset: '0' } },
+      },
+      animation: {
+        kenburns: 'kenburns 12s ease-out forwards',
+        floaty: 'floaty 6s ease-in-out infinite',
+        scan: 'scan 1.1s cubic-bezier(0.22,1,0.36,1) forwards',
+        spinslow: 'spinslow 90s linear infinite',
+        blink: 'blink 1.2s steps(1) infinite',
+        pulsenode: 'pulsenode 2.4s ease-in-out infinite',
+        trace: 'trace 1.6s linear infinite',
       },
     },
   },
-  plugins: [animate],
+  plugins: [
+    plugin(({ addVariant }) => {
+      // Hover-capable fine pointers only (cursor effects, magnetic, tilt) — §9
+      addVariant('can-hover', '@media (hover: hover) and (pointer: fine)')
+    }),
+  ],
 }

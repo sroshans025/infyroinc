@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -2 79 104" width="79" height="104">
+  <g stroke-width="4" stroke-linejoin="round">
+    <path id="facet-tech" fill="#0A78F2" stroke="#0A78F2" d="M75 0 H40 L1 39 V50 H23 Z"/>
+    <path id="facet-studios" fill="#3B95F5" stroke="#3B95F5" d="M1 50 H23 L49 77 V91 L40 100 L1 61 Z"/>
+    <path id="facet-construction" fill="#0063D1" stroke="#0063D1" d="M49 47 L74 22 V66 L49 91 Z"/>
+  </g>
+</svg>

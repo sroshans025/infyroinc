@@ -2,4 +2,7 @@ node_modules
 dist
 .vercel
 .env*
+!.env.example
 *.log
+# local design briefs / prompt pack
+docs/

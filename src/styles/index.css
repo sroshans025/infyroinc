@@ -1,0 +1,244 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ───────────── Tokens — FINAL spec §2 (one blue + navy for all four brands) ───────────── */
+:root {
+  --brand: #0a78f2;
+  --brand-hover: #0063d1;
+  --brand-tint: #eaf3fe;
+  --brand-rgb: 10 120 242;
+  --brand-ink: #0063d1; /* AA-safe blue for small text on white */
+  --brand-ink-hover: #0052ad;
+  --line: rgba(10, 120, 242, 0.12);
+  --line-strong: rgba(10, 120, 242, 0.35);
+  --motif: #0a78f2; /* per-brand motif accent — background linework only */
+  --nav-h: 56px;
+}
+@media (min-width: 1024px) {
+  :root {
+    --nav-h: 64px;
+  }
+}
+.theme-tech {
+  --motif: #22d3ee;
+}
+.theme-studios {
+  --motif: #f59e0b;
+}
+.theme-construct {
+  --motif: #f97316;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  body {
+    @apply bg-white font-sans text-[16px] leading-[1.6] text-ink-2;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply text-balance text-ink;
+  }
+  p {
+    @apply text-pretty;
+  }
+  [id] {
+    scroll-margin-top: 80px;
+  }
+  :focus-visible {
+    outline: 2px solid var(--brand);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  ::selection {
+    background: rgb(var(--brand-rgb) / 0.16);
+  }
+}
+
+@layer components {
+  /* Type scale — §9: xs h1 40 / h2 30 → xl h1 64–72 → 2xl h1 80 */
+  .t-display {
+    @apply text-[40px] font-bold leading-[1.04] tracking-[-0.03em] sm:text-[52px] lg:text-[60px] xl:text-[72px] 2xl:text-[80px];
+  }
+  .t-h1 {
+    @apply text-[40px] font-bold leading-[1.05] tracking-[-0.03em] sm:text-[48px] lg:text-[52px] xl:text-[60px] 2xl:text-[68px];
+  }
+  .t-h2 {
+    @apply text-[30px] font-semibold leading-[1.1] tracking-[-0.03em] sm:text-[36px] lg:text-[44px] xl:text-[48px];
+  }
+  .t-h3 {
+    @apply text-[22px] font-semibold leading-[1.2] tracking-[-0.02em] lg:text-[26px];
+  }
+  .t-h4 {
+    @apply text-[18px] font-semibold leading-[1.3] tracking-[-0.01em] lg:text-[19px];
+  }
+  .t-lead {
+    @apply text-[18px] leading-[1.5] tracking-[-0.01em] lg:text-[21px];
+  }
+  .t-body {
+    @apply text-[16px] leading-[1.65] md:text-[17px];
+  }
+  .t-small {
+    @apply text-[14px] leading-[1.55];
+  }
+  .t-legal {
+    @apply text-[12px] leading-[1.5];
+  }
+  /* Stencil / mono labels — "01 / ABOUT" */
+  .t-mono {
+    @apply font-mono text-[12px] font-medium uppercase tracking-[0.14em];
+  }
+
+  /* Containers — §9 */
+  .container-content {
+    @apply mx-auto w-full px-5 sm:px-6 md:px-8 lg:max-w-[1120px] lg:px-10 xl:max-w-[1240px] 2xl:max-w-[1360px];
+  }
+  .container-wide {
+    @apply container-content;
+  }
+
+  /* Grids (§4.1 / §4.2) — 24px minor / 96px major in `line` colour */
+  .grid-blueprint {
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px),
+      linear-gradient(rgba(10, 120, 242, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10, 120, 242, 0.05) 1px, transparent 1px);
+    background-size: 96px 96px, 96px 96px, 24px 24px, 24px 24px;
+  }
+  .grid-blueprint-strong {
+    background-image:
+      linear-gradient(var(--line-strong) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-strong) 1px, transparent 1px),
+      linear-gradient(rgba(10, 120, 242, 0.2) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(10, 120, 242, 0.2) 1px, transparent 1px);
+    background-size: 96px 96px, 96px 96px, 24px 24px, 24px 24px;
+  }
+  .grid-dots {
+    background-image: radial-gradient(circle, rgba(10, 120, 242, 0.28) 1.1px, transparent 1.5px);
+    background-size: 24px 24px;
+    background-position: -12px -12px;
+  }
+  .grid-dots-strong {
+    background-image: radial-gradient(circle, rgba(10, 120, 242, 0.9) 1.3px, transparent 1.8px);
+    background-size: 24px 24px;
+    background-position: -12px -12px;
+  }
+  .grid-dark {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 96px 96px, 96px 96px, 24px 24px, 24px 24px;
+  }
+  .grid-dark-strong {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.22) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.22) 1px, transparent 1px),
+      linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 96px 96px, 96px 96px, 24px 24px, 24px 24px;
+  }
+  .grid-fade {
+    mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 35%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 35%, transparent 80%);
+  }
+
+  /* Tick-mark corners (§4.1 #3): 10px L-ticks, extend to 16px + blue on hover */
+  .tick {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    pointer-events: none;
+    transform: scale(0.625);
+    transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1), border-color 300ms;
+    border-color: var(--line-strong);
+  }
+  .tick-tl {
+    left: -1px;
+    top: -1px;
+    border-left-width: 1.5px;
+    border-top-width: 1.5px;
+    transform-origin: top left;
+  }
+  .tick-tr {
+    right: -1px;
+    top: -1px;
+    border-right-width: 1.5px;
+    border-top-width: 1.5px;
+    transform-origin: top right;
+  }
+  .tick-bl {
+    left: -1px;
+    bottom: -1px;
+    border-left-width: 1.5px;
+    border-bottom-width: 1.5px;
+    transform-origin: bottom left;
+  }
+  .tick-br {
+    right: -1px;
+    bottom: -1px;
+    border-right-width: 1.5px;
+    border-bottom-width: 1.5px;
+    transform-origin: bottom right;
+  }
+  .tick-on .tick,
+  .group:focus-visible .tick {
+    transform: scale(1);
+    border-color: #0a78f2;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .group:hover .tick {
+      transform: scale(1);
+      border-color: #0a78f2;
+    }
+  }
+
+  /* Footer underline that grows from the left */
+  .link-grow {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 300ms cubic-bezier(0.22, 1, 0.36, 1), color 200ms ease-out;
+  }
+  .link-grow:focus-visible {
+    background-size: 100% 1px;
+  }
+  @media (hover: hover) {
+    .link-grow:hover {
+      background-size: 100% 1px;
+    }
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
