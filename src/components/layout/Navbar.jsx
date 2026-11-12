@@ -21,7 +21,8 @@ function useActiveSection(ids, enabled) {
     }
     let io
     const t = setTimeout(() => {
-      const els = ids.map((id) => document.getElementById(id)).filter(Boolean)
+      // The hero is observed too, so scrolling back to the top clears the active link.
+      const els = [...ids, 'home', 'hero'].map((id) => document.getElementById(id)).filter(Boolean)
       io = new IntersectionObserver(
         (entries) => {
           entries.forEach((e) => e.isIntersecting && setActive(e.target.id))

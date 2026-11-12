@@ -6,10 +6,23 @@ import { AboutSplit, ServiceGrid, ProgramSection } from '../../components/compan
 import ContactSplit from '../../components/company/ContactSplit'
 import { hero, overview, pillars, academic, corporate, careers, contact, techContactForm, ENQUIRY_TYPES, internshipsLink } from '../../data/tech'
 import { EMAILS } from '../../data/contact'
+import heroImg from '../../assets/images/tech/hero.webp'
+import aboutImg from '../../assets/images/tech/about.webp'
+import softwareImg from '../../assets/images/tech/software.webp'
+import mobileImg from '../../assets/images/tech/webmobile.webp'
+import aiImg from '../../assets/images/tech/ai.webp'
+import dataImg from '../../assets/images/tech/data.webp'
+import cloudImg from '../../assets/images/tech/cloud.webp'
+import consultingImg from '../../assets/images/tech/consulting.webp'
+import academicImg from '../../assets/images/tech/academic.webp'
+import corporateImg from '../../assets/images/tech/corporate.webp'
+import careersImg from '../../assets/images/tech/careers.webp'
+
+const PILLAR_IMG = [softwareImg, mobileImg, aiImg, dataImg, cloudImg, consultingImg]
 
 /**
- * /technologies — FINAL §1 flow: About · Six Pillars · Academic Training (+ Know More: Internships)
- * · Corporate Training · Career Opportunity · Contact. One page, shared company template.
+ * /technologies — About · Six Pillars · Academic Training (+ Internships) · Corporate Training ·
+ * Careers · Contact. One page, shared company template.
  */
 export default function Overview() {
   const [params, setParams] = useSearchParams()
@@ -19,11 +32,20 @@ export default function Overview() {
   return (
     <>
       <Seo page="tech" />
-      <CompanyHero brandKey="tech" label="Technologies" title={hero.title} small={hero.small} primary={hero.primary} secondary={hero.secondary} />
+      <CompanyHero
+        brandKey="tech"
+        title={hero.title}
+        small={hero.small}
+        primary={hero.primary}
+        secondary={hero.secondary}
+        image={heroImg}
+        imageAlt="Software engineers working together at their desks"
+      />
 
       <AboutSplit
-        n={2}
         eyebrow={overview.eyebrow}
+        image={aboutImg}
+        imageAlt="An open-plan technology office"
         lead={overview.paragraphs[0]}
         paragraphs={[overview.paragraphs[1]]}
         pills={overview.expertise}
@@ -33,32 +55,30 @@ export default function Overview() {
 
       <ServiceGrid
         id="pillars"
-        n={3}
-        eyebrow="Pillars"
+        eyebrow="What We Do"
         title={pillars.title}
         intro={pillars.intro}
-        items={pillars.items.map((p) => ({ ...p, n: Number(p.n) }))}
-        hrefFor={() => '/technologies?type=software#contact'}
-        closing={{ title: `${pillars.commitment.label} ${pillars.commitment.text}` }}
+        items={pillars.items.map((p, i) => ({ ...p, image: PILLAR_IMG[i] }))}
+        closing={{ title: pillars.commitment.text, extra: pillars.commitment.label.replace(':', '') }}
       />
 
       <ProgramSection
         id="academic"
-        n={4}
         label="Academic Training"
         data={academic}
         tone="alt"
+        image={academicImg}
+        imageAlt="Students learning together around a laptop"
         extra={
           <Button href={internshipsLink.href} variant="secondary">
             {internshipsLink.label}
           </Button>
         }
       />
-      <ProgramSection id="corporate" n={5} label="Corporate Training" data={corporate} tone="white" />
-      <ProgramSection id="careers" n={6} label="Careers" data={careers} tone="alt" />
+      <ProgramSection id="corporate" label="Corporate Training" data={corporate} tone="white" image={corporateImg} imageAlt="A corporate training session in a seminar room" />
+      <ProgramSection id="careers" label="Careers" data={careers} tone="alt" image={careersImg} imageAlt="A team collaborating on laptops" />
 
       <ContactSplit
-        n={7}
         tone="white"
         title={contact.title}
         lead={contact.intro}

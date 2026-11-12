@@ -6,29 +6,28 @@ import ContactForm from '../forms/ContactForm'
 import ContactPanel from '../sections/ContactPanel'
 import PCard from '../precision/PCard'
 import { BlockRise, Block } from '../precision/Primitives'
-import { SectionDivider } from '../precision/Motifs'
 
 /** Tech "How Can We Help You?" tiles — toggle buttons that pre-select the Enquiry Type. */
 function HelpTiles({ title, tiles, selected, onSelect }) {
   return (
     <div className="mb-12">
-      <h3 className="t-mono text-[11px] text-[#0063D1]">{title}</h3>
-      <BlockRise as="ul" className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:gap-4">
+      <h3 className="t-h3 text-center">{title}</h3>
+      <BlockRise as="ul" className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {tiles.map((h) => {
           const on = selected === h.type
           return (
             <Block as="li" key={h.type}>
-              <PCard as="button" type="button" aria-pressed={on} onClick={() => onSelect(h.type)} className={`flex h-full w-full flex-col p-6 text-left ${on ? 'tick-on !border-[#0A78F2]' : ''}`}>
+              <PCard as="button" type="button" aria-pressed={on} onClick={() => onSelect(h.type)} className={`flex h-full w-full flex-col p-6 text-left transition-colors hover:border-line-strong ${on ? '!border-brand ring-1 ring-brand' : ''}`}>
                 <span className="flex items-start justify-between">
-                  <span className={`grid h-11 w-11 place-items-center rounded-[10px] border transition-colors ${on ? 'border-[#0A78F2] bg-[#0A78F2]' : 'border-line-strong'}`}>
-                    <h.icon aria-hidden="true" className={`h-5 w-5 ${on ? 'text-white' : 'text-[#0A78F2]'}`} strokeWidth={1.5} />
+                  <span className={`grid h-10 w-10 place-items-center rounded-[10px] ${on ? 'bg-brand' : 'bg-navy'}`}>
+                    <h.icon aria-hidden="true" className={`h-5 w-5 ${on ? 'text-white' : 'text-[#5AA9FF]'}`} strokeWidth={1.75} />
                   </span>
                   <span aria-hidden="true" className={`grid h-6 w-6 place-items-center rounded-full ${on ? 'bg-[#0A78F2] text-white' : 'text-transparent ring-1 ring-inset ring-line'}`}>
                     <Check className="h-3.5 w-3.5" strokeWidth={2.5} />
                   </span>
                 </span>
-                <span className="t-h4 mt-6 block">{h.title}</span>
-                <span className="t-small mt-2 block text-muted">{h.text}</span>
+                <span className="t-h4 mt-5 block">{h.title}</span>
+                <span className="mt-2 block text-[14px] leading-[1.7] text-muted">{h.text}</span>
               </PCard>
             </Block>
           )
@@ -39,19 +38,18 @@ function HelpTiles({ title, tiles, selected, onSelect }) {
 }
 
 /**
- * ContactSplit (FINAL §8.2): form 7 cols + details 5 cols on desktop; on mobile the details come first.
+ * ContactSplit: form (7 cols) + contact details (5 cols) on desktop; on mobile the details come first.
  * Identical layout on every company page.
  */
 export default function ContactSplit({
-  id = 'contact', n, title, tagline, lead, formTitle, formIntro, form, inbox, preset, help,
+  id = 'contact', title, tagline, lead, formTitle, formIntro, form, inbox, preset, help,
   asideTitle, asideBody, socials, below, signoff = [], tone = 'alt',
 }) {
   return (
     <>
-      <SectionDivider n={n} className={`py-6 ${tone === 'alt' ? 'bg-white' : 'bg-paper-2'}`} />
       <Section id={id} tone={tone} labelledBy={`${id}-title`}>
-        <SectionHeading id={`${id}-title`} n={n} eyebrow="Contact" title={title} tagline={tagline} lead={lead} />
-        <div className="mt-12">
+        <SectionHeading id={`${id}-title`} eyebrow="Contact" title={title} tagline={tagline} lead={lead} />
+        <div className="mt-10">
           {help && <HelpTiles {...help} />}
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
             <Reveal className="order-2 lg:order-1 lg:col-span-7">
@@ -68,21 +66,21 @@ export default function ContactSplit({
                 <h3 id={`${id}-aside`} className="t-h3">
                   {asideTitle}
                 </h3>
-                {asideBody && <p className="t-small mt-3 text-muted">{asideBody}</p>}
+                {asideBody && <p className="mt-3 text-[14px] leading-[1.7] text-muted">{asideBody}</p>}
                 <ContactPanel email={inbox} socials={socials} className="mt-5 md:grid md:grid-cols-2 md:gap-x-6 lg:block" />
               </PCard>
             </Reveal>
           </div>
         </div>
         {signoff.length > 0 && (
-          <Reveal className="mt-16 text-center lg:mt-20">
-            <p className="t-h4">{signoff[0]}</p>
+          <div className="mt-12 text-center">
+            <p className="text-[16px] font-semibold text-ink">{signoff[0]}</p>
             {signoff.slice(1).map((l) => (
-              <p key={l} className="t-mono mt-2 text-[11px] text-subtle">
+              <p key={l} className="mt-1 text-[14px] text-muted">
                 {l}
               </p>
             ))}
-          </Reveal>
+          </div>
         )}
       </Section>
     </>

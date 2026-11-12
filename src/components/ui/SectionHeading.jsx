@@ -1,6 +1,9 @@
 import Reveal from '../motion/Reveal'
 import { Stencil } from '../precision/Primitives'
 
+// Literal class names so Tailwind keeps them in the build.
+const SIZE = { h1: 't-h1', h2: 't-h2', h3: 't-h3', h4: 't-h4' }
+
 /**
  * Section heading: eyebrow label + title + short blue rule + optional tagline/lead.
  * Centred by default; `align="left"` for side-by-side layouts. `level` sets the visual size,
@@ -13,7 +16,7 @@ export default function SectionHeading({ id, eyebrow, title, tagline, lead, alig
   return (
     <Reveal className={`${center ? 'mx-auto text-center' : ''} max-w-3xl ${className}`}>
       {eyebrow && <Stencil label={eyebrow} tone={tone} className="mb-3" />}
-      <Tag id={id} className={`t-${level} ${light ? '!text-white' : ''}`}>
+      <Tag id={id} className={`${SIZE[level]} ${light ? '!text-white' : ''}`}>
         {title}
       </Tag>
       {rule && <span aria-hidden="true" className={`title-rule ${center ? 'mx-auto' : ''}`} />}

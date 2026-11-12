@@ -1,9 +1,9 @@
-// Infyro Technologies — copy is word for word from docs/03-PAGE-CONTENT.md (Part B).
+// Infyro Technologies page copy.
 import { INTERNSHIP_FORM } from './links'
 import { Code2, Smartphone, BrainCircuit, BarChart3, Cloud, Compass, GraduationCap, Building2, Briefcase } from 'lucide-react'
 
 export const overview = {
-  eyebrow: 'About',
+  eyebrow: 'About Us',
   title: 'Transforming Ideas into Intelligent Digital Solutions',
   paragraphs: [
     'Infyro Technologies is an IT services and technology solutions company focused on software development, AI-driven solutions, web and mobile applications, and digital transformation. As a subsidiary of Infyro Inc., we combine creativity, technical expertise, and innovation to develop high-quality software products and customized solutions that address real-world business challenges.',
