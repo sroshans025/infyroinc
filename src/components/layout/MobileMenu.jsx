@@ -62,7 +62,7 @@ export default function MobileMenu({ id, brand, cta, onClose }) {
         {/* Swipe down from the top bar to close */}
         <div className="container-content relative flex h-16 shrink-0 touch-none items-center justify-between border-b border-line" onPointerDown={(e) => drag.start(e)}>
           <SmartLink href={brand.path} onClick={onClose} aria-label={`${brand.name} home`}>
-            {brand.key === 'inc' ? <BrandLogo brand="inc" groupName /> : <BrandLogo brand={brand.key} />}
+            {brand.key === 'inc' ? <BrandLogo brand="inc" /> : <BrandLogo brand={brand.key} />}
           </SmartLink>
           <button type="button" onClick={onClose} aria-label="Close menu" className="-mr-2 grid h-11 w-11 place-items-center rounded-full text-ink hover:bg-blue-50">
             <X className="h-6 w-6" strokeWidth={1.5} aria-hidden="true" />

@@ -1,78 +1,52 @@
-import { ArrowRight, Building2, Camera, Cpu, Mail, Phone } from 'lucide-react'
+import { Building2, Camera, ChevronRight, Cpu, Mail, Phone } from 'lucide-react'
 import Seo from '../components/layout/Seo'
 import Section from '../components/ui/Section'
 import SectionHeading from '../components/ui/SectionHeading'
 import SmartLink from '../components/ui/SmartLink'
-import Button, { ButtonGroup } from '../components/ui/Button'
+import Button from '../components/ui/Button'
 import Reveal from '../components/motion/Reveal'
 import Mark from '../components/brand/Mark'
+import BrandLogo from '../components/brand/BrandLogo'
+import FacetMark from '../components/brand/FacetMark'
+import LogoHero from '../components/home/LogoHero'
 import { BlockRise, Block } from '../components/precision/Primitives'
 import FeatureCard from '../components/precision/FeatureCard'
-import { hero, about, companies, values, visionMission, why, workTogether } from '../data/inc'
+import { about, companies, values, visionMission, why, workTogether } from '../data/inc'
 import { PHONE, EMAILS } from '../data/contact'
-import techImg from '../assets/images/home/tech.webp'
-import studiosImg from '../assets/images/home/studios.webp'
-import constructionImg from '../assets/images/home/construction.webp'
 import whyImg from '../assets/images/home/why.webp'
 import aboutImg from '../assets/images/home/about.webp'
 import techPillarImg from '../assets/images/tech/software.webp'
 import studiosPillarImg from '../assets/images/studios/photo.webp'
 import constructionPillarImg from '../assets/images/construction/architecture.webp'
 
-const COMPANY_IMG = { tech: techImg, studios: studiosImg, construction: constructionImg }
 const PILLAR_IMG = { tech: techPillarImg, studios: studiosPillarImg, construction: constructionPillarImg }
 const COMPANY_ICON = { tech: Cpu, studios: Camera, construction: Building2 }
 
-/* Hero — the logo is the focus: large mark + group name, one headline, one line, two buttons. */
-function Hero() {
-  return (
-    <section
-      id="home"
-      aria-labelledby="hero-title"
-      className="relative flex min-h-[100svh] flex-col overflow-hidden bg-[radial-gradient(ellipse_80%_70%_at_50%_0%,#E6F0FE_0%,#F7FAFF_45%,#FFFFFF_75%)] pt-[var(--nav-h)]"
-    >
-      {/* Fills exactly one screen: content is centred in the space below the navbar and scales down on short screens. */}
-      <div className="container-content relative flex flex-1 flex-col items-center justify-center py-12 text-center md:py-14 short:py-6">
-        <span className="grid h-[112px] w-[112px] place-items-center rounded-[28px] bg-white shadow-soft-lg md:h-[140px] md:w-[140px] md:rounded-[32px] short:h-[96px] short:w-[96px] short:rounded-[24px]">
-          <Mark size={92} className="h-[72px] w-auto md:h-[92px] short:h-[62px]" />
-        </span>
-        <p className="mt-6 text-[14px] font-semibold uppercase tracking-[0.28em] text-brand-ink short:mt-4">INFYRO</p>
-        <h1 id="hero-title" className="t-display mt-3 max-w-4xl short:text-[44px]">
-          {hero.lines[0]} <span className="text-brand">{hero.lines[1]}</span>
-        </h1>
-        <p className="mt-5 max-w-2xl text-[16px] leading-[1.75] text-muted md:text-[17px] short:mt-3 short:text-[15px] short:leading-[1.6]">{hero.lead}</p>
-        <ButtonGroup primary={hero.primary} secondary={hero.secondary} align="center" className="mt-8 w-full sm:w-auto short:mt-6" />
-      </div>
-    </section>
-  )
-}
-
-/* Company cards — full-photo cards with the text over a dark gradient; the whole card is a link. */
+/* Company cards — white cards: the logo piece for that company, name, tagline, short description; the whole card is a link. */
 function CompanyCards() {
   return (
-    <Section id="companies" labelledBy="companies-title">
+    <Section id="companies" tone="alt" labelledBy="companies-title">
       <SectionHeading id="companies-title" eyebrow={companies.eyebrow} title={companies.title} />
       <BlockRise as="ul" className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3 lg:mt-12">
         {companies.items.map((c, i) => (
           <Block as="li" key={c.key}>
-            <FeatureCard
-              accent={i}
-              image={COMPANY_IMG[c.key]}
-              icon={COMPANY_ICON[c.key]}
-              title={c.name}
-              kicker={c.tagline}
-              footer={
-                <SmartLink
-                  href={c.href}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-[13px] font-semibold text-ink after:absolute after:inset-0 after:content-['']"
-                >
+            <article className="group relative flex h-full flex-col rounded-card border border-line bg-white p-7 shadow-soft transition-[border-color,box-shadow] duration-300 hover:border-line-strong hover:shadow-soft-lg">
+              <div className="flex items-start justify-between">
+                <FacetMark size={76} active={c.key} dim={0.22} />
+                <span className="font-mono text-[11px] text-subtle">{`0${i + 1}`}</span>
+              </div>
+              <h3 className="mt-6">
+                <BrandLogo brand={c.key} size="md" noMark />
+              </h3>
+              <p className="mt-3 text-[15px] font-medium text-[#0063D1]">{c.tagline}</p>
+              <p className="mt-3 text-[14px] leading-[1.7] text-muted">{c.description}</p>
+              <div className="mt-auto pt-6">
+                <SmartLink href={c.href} className="inline-flex items-center gap-0.5 text-[15px] font-semibold text-ink after:absolute after:inset-0 after:content-['']">
                   {c.cta}
-                  <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                  <ChevronRight aria-hidden="true" className="h-4 w-4 transition-transform group-hover:translate-x-[3px]" />
                 </SmartLink>
-              }
-            >
-              {c.description}
-            </FeatureCard>
+              </div>
+            </article>
           </Block>
         ))}
       </BlockRise>
@@ -83,7 +57,7 @@ function CompanyCards() {
 /* About — statement + paragraphs beside a photo, three focus cards, closing paragraph. */
 function About() {
   return (
-    <Section id="about" tone="alt" labelledBy="about-title">
+    <Section id="about" labelledBy="about-title">
       <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-14">
         <div className="lg:col-span-7">
           <Reveal>
@@ -121,10 +95,20 @@ function About() {
   )
 }
 
+/* Large outline of the mark, centred behind a section's content. */
+function Watermark({ color, className = '' }) {
+  return (
+    <div aria-hidden="true" className={`pointer-events-none absolute left-1/2 top-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 ${className}`}>
+      <FacetMark size={540} outline color={color} />
+    </div>
+  )
+}
+
 /* Vision & Mission — compact cards on a dark band. */
 function VisionMission() {
   return (
-    <Section id="vision" tone="navy" labelledBy="vision-title">
+    <Section id="vision" tone="navy" labelledBy="vision-title" className="isolate overflow-hidden">
+      <Watermark color="#FFFFFF" className="opacity-[0.06]" />
       <SectionHeading id="vision-title" eyebrow="Our Direction" title="Vision & Mission" tone="light" />
       <BlockRise as="ul" className="mx-auto mt-10 grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-2">
         {visionMission.map(({ label, text, icon }, i) => (
@@ -160,7 +144,8 @@ function Values() {
 /* Why Infyro — text beside an image. */
 function Why() {
   return (
-    <Section id="why" tone="alt" labelledBy="why-title">
+    <Section id="why" tone="alt" labelledBy="why-title" className="isolate overflow-hidden">
+      <Watermark className="opacity-[0.08]" />
       <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-14">
         <div>
           <SectionHeading id="why-title" eyebrow="Why Choose Us" title={why.title} align="left" />
@@ -224,7 +209,7 @@ export default function Home() {
   return (
     <>
       <Seo page="home" />
-      <Hero />
+      <LogoHero />
       <CompanyCards />
       <About />
       <VisionMission />
