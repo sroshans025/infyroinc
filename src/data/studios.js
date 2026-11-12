@@ -1,24 +1,18 @@
-// Infyro Studios — copy is word for word from docs/03-PAGE-CONTENT.md (Part C).
+// Infyro Studios page copy.
 import { Camera, Clapperboard, CalendarHeart, Megaphone, Smartphone, Palette, Eye, Target } from 'lucide-react'
-
-// TODO: replace every `image: null` with real Studios photography (WebP/AVIF, ~2400px wide for heroes).
-// While null, a warm cinematic gradient placeholder renders in its place.
 
 export const hero = {
   title: 'Your Story, Our Frame.',
   small: 'An Infyro Inc. Company.',
-  image: null, // TODO: 21:9 cinematic hero image or muted loop video
   primary: { label: 'Book a Session', href: '#booking' },
   secondary: { label: 'Our Services', href: '#services' },
 }
 
 export const about = {
   title: 'About Infyro Studios',
-  image: null, // TODO: portrait image (4:5)
   text: 'Infyro Studios is a creative media and event management brand dedicated to cinematic storytelling, exceptional photography, and unforgettable experiences. Combining creativity, innovation, and precision, we transform meaningful moments into timeless memories and bold ideas into compelling visual stories.',
 }
 
-export const visionMissionImage = null // TODO: framed image beside Vision & Mission
 export const visionMission = [
   { label: 'Our Vision', icon: Eye, text: 'To become a globally recognized creative studio redefining visual storytelling through innovation, artistry, and excellence.' },
   { label: 'Our Mission', icon: Target, text: 'To transform meaningful moments and creative ideas into timeless visual stories and exceptional experiences through quality, creativity, and professionalism.' },
@@ -29,12 +23,12 @@ export const services = {
   tagline: 'Creative Vision. Exceptional Execution.',
   intro: 'We bring stories to life through creative media, professional production, and thoughtfully managed experiences.',
   items: [
-    { n: '1', title: 'Photography', text: 'Wedding, candid, pre-wedding, portrait, product, and corporate photography.', icon: Camera, image: null },
-    { n: '2', title: 'Cinematic Videography', text: 'Wedding films, event highlights, promotional videos, and cinematic storytelling.', icon: Clapperboard, image: null },
-    { n: '3', title: 'Wedding & Event Management', text: 'Wedding planning, birthday celebrations, corporate events, and special occasions.', icon: CalendarHeart, image: null },
-    { n: '4', title: 'Commercial & Brand Production', text: 'Brand films, product shoots, promotional campaigns, and business visual content.', icon: Megaphone, image: null },
-    { n: '5', title: 'Digital Content Creation', text: 'Social media reels, creative videos, campaign visuals, and branded content.', icon: Smartphone, image: null },
-    { n: '6', title: 'Creative Production', text: 'Concept development, visual direction, production planning, and customized creative projects.', icon: Palette, image: null },
+    { n: '1', title: 'Photography', text: 'Wedding, candid, pre-wedding, portrait, product, and corporate photography.', icon: Camera },
+    { n: '2', title: 'Cinematic Videography', text: 'Wedding films, event highlights, promotional videos, and cinematic storytelling.', icon: Clapperboard },
+    { n: '3', title: 'Wedding & Event Management', text: 'Wedding planning, birthday celebrations, corporate events, and special occasions.', icon: CalendarHeart },
+    { n: '4', title: 'Commercial & Brand Production', text: 'Brand films, product shoots, promotional campaigns, and business visual content.', icon: Megaphone },
+    { n: '5', title: 'Digital Content Creation', text: 'Social media reels, creative videos, campaign visuals, and branded content.', icon: Smartphone },
+    { n: '6', title: 'Creative Production', text: 'Concept development, visual direction, production planning, and customized creative projects.', icon: Palette },
   ],
   closing: {
     title: 'Your Story, Our Frame.',
@@ -42,30 +36,13 @@ export const services = {
   },
 }
 
-// Portfolio — no content was provided in the brief.
-// TODO: replace with real portfolio. Each item: { category, image, alt, aspect }. Do not invent client/event names.
-export const PORTFOLIO_CATEGORIES = ['All', 'Photography', 'Videography', 'Events', 'Commercial']
-export const portfolio = {
-  title: 'Our Portfolio',
-  // Six placeholders, aspect pairs arranged so the three masonry columns end level.
-  items: [
-    { id: 1, category: 'Photography', image: null, alt: 'Portfolio placeholder', aspect: '1/1' },
-    { id: 2, category: 'Videography', image: null, alt: 'Portfolio placeholder', aspect: '3/2' },
-    { id: 3, category: 'Events', image: null, alt: 'Portfolio placeholder', aspect: '3/2' },
-    { id: 4, category: 'Commercial', image: null, alt: 'Portfolio placeholder', aspect: '1/1' },
-    { id: 5, category: 'Photography', image: null, alt: 'Portfolio placeholder', aspect: '1/1' },
-    { id: 6, category: 'Events', image: null, alt: 'Portfolio placeholder', aspect: '3/2' },
-  ],
-}
-
 export const book = {
   title: 'Book a Session',
   sub: "Let's Create Something Unforgettable.",
   body: 'Every special moment deserves to be captured beautifully. Tell us about your vision, and let Infyro Studios transform it into a timeless experience.',
-  button: 'Email Your Booking Enquiry',
+  button: 'Book a Session',
   note: 'Our team will connect with you to discuss your requirements, availability, and personalized package options.',
   signoff: 'Infyro Studios — Your Story, Our Frame.',
-  image: null, // TODO: full-width image band
 }
 
 export const contact = {

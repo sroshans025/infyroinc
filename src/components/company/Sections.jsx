@@ -5,17 +5,38 @@ import Button, { ButtonGroup } from '../ui/Button'
 import Accordion from '../ui/Accordion'
 import Reveal from '../motion/Reveal'
 import { BlockRise, Block } from '../precision/Primitives'
-import { useBrandKey } from '../precision/brandContext'
-import { BRANDS } from '../../data/navigation'
 
 /* ───────── AboutSplit: text on the left, photo + key statements on the right ───────── */
-export function AboutSplit({ id = 'about', eyebrow, lead, paragraphs = [], tiles = [], pills, closing = [], tone = 'alt', image, imageAlt = '' }) {
-  const brand = BRANDS[useBrandKey()]
+function AboutTiles({ tiles, cols }) {
+  return (
+    <BlockRise as="ul" className={`grid grid-cols-1 gap-4 ${cols}`}>
+      {tiles.map(({ label, text, icon: Icon }) => (
+        <Block as="li" key={label}>
+          <div className="h-full rounded-card border border-line bg-white p-6">
+            <div className="flex items-center gap-3">
+              {Icon && (
+                <span className="grid h-9 w-9 place-items-center rounded-[10px] bg-navy">
+                  <Icon aria-hidden="true" className="h-4 w-4 text-[#5AA9FF]" strokeWidth={1.75} />
+                </span>
+              )}
+              <h3 className="t-eyebrow text-brand-ink">{label}</h3>
+            </div>
+            <p className="mt-3 text-[15px] font-medium leading-[1.65] text-ink">{text}</p>
+          </div>
+        </Block>
+      ))}
+    </BlockRise>
+  )
+}
+
+export function AboutSplit({ id = 'about', kicker = 'Who We Are', eyebrow, lead, paragraphs = [], tiles = [], pills, closing = [], tone = 'alt', image, imageAlt = '' }) {
+  // A short text (lead only) keeps the statement cards beside it so neither column looks empty.
+  const short = paragraphs.length === 0 && !pills
   return (
     <Section id={id} tone={tone} labelledBy={`${id}-title`}>
-      <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
+      <div className={`grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14 ${short ? 'lg:items-center' : ''}`}>
         <div className="lg:col-span-7">
-          <SectionHeading id={`${id}-title`} eyebrow={brand.name} title={eyebrow} align="left" />
+          <SectionHeading id={`${id}-title`} eyebrow={kicker} title={eyebrow} align="left" />
           {lead && (
             <Reveal as="p" className="mt-6 text-[17px] font-medium leading-[1.65] text-ink md:text-[18px] t-justify">
               {lead}
@@ -35,32 +56,19 @@ export function AboutSplit({ id = 'about', eyebrow, lead, paragraphs = [], tiles
               ))}
             </Reveal>
           )}
+          {short && tiles.length > 0 && (
+            <div className="mt-8">
+              <AboutTiles tiles={tiles} cols="sm:grid-cols-2" />
+            </div>
+          )}
         </div>
         <div className="flex flex-col gap-5 lg:col-span-5">
           {image && (
             <Reveal>
-              <img src={image} alt={imageAlt} loading="lazy" decoding="async" className="aspect-[4/3] w-full rounded-card object-cover" />
+              <img src={image} alt={imageAlt} loading="lazy" decoding="async" className={`w-full rounded-card object-cover ${short ? 'aspect-[4/3] lg:aspect-[4/5]' : 'aspect-[4/3]'}`} />
             </Reveal>
           )}
-          {tiles.length > 0 && (
-            <BlockRise as="ul" className={`grid grid-cols-1 gap-4 ${tiles.length > 1 ? 'sm:grid-cols-2 lg:grid-cols-1' : ''}`}>
-              {tiles.map(({ label, text, icon: Icon }) => (
-                <Block as="li" key={label}>
-                  <div className="h-full rounded-card border border-line bg-white p-6">
-                    <div className="flex items-center gap-3">
-                      {Icon && (
-                        <span className="grid h-9 w-9 place-items-center rounded-[10px] bg-navy">
-                          <Icon aria-hidden="true" className="h-4 w-4 text-[#5AA9FF]" strokeWidth={1.75} />
-                        </span>
-                      )}
-                      <h3 className="t-eyebrow text-brand-ink">{label}</h3>
-                    </div>
-                    <p className="mt-3 text-[16px] font-medium leading-[1.6] text-ink">{text}</p>
-                  </div>
-                </Block>
-              ))}
-            </BlockRise>
-          )}
+          {!short && tiles.length > 0 && <AboutTiles tiles={tiles} cols={tiles.length > 1 ? 'sm:grid-cols-2 lg:grid-cols-1' : ''} />}
         </div>
       </div>
       {closing.length > 0 && (
@@ -218,16 +226,16 @@ export function BookingBand({ title, sub, body, enquiry, helper, button, href, n
             {enquiry && (
               <>
                 <h3 className="t-h4 !text-white">{enquiry.title}</h3>
-                <p className="mt-2 text-[14px] leading-[1.7] text-white/75">{enquiry.body}</p>
+                <p className="mb-3 mt-2 text-[14px] leading-[1.7] text-white/75">{enquiry.body}</p>
               </>
             )}
+            {note && <p className="text-[15px] leading-[1.7] text-white/80">{note}</p>}
             {helper && <p className="mt-3 text-[14px] text-white/70">{helper}</p>}
             {href && (
               <Button href={href} variant="light" external={/^https?:/.test(href)} className="mt-6 w-full sm:w-auto">
                 {button}
               </Button>
             )}
-            {note && <p className="mt-5 text-[14px] leading-[1.7] text-white/75">{note}</p>}
           </Reveal>
         </div>
         {signoff.length > 0 && (
