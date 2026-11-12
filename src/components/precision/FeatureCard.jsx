@@ -14,8 +14,8 @@ export const ACCENTS = [
 
 export const accentAt = (i) => ACCENTS[i % ACCENTS.length]
 
-/** Shared surface classes (solid dark blue), for panels that are not FeatureCards (e.g. list panels). */
-export const CARD_SURFACE = 'relative overflow-hidden rounded-card bg-[#0F2346] text-white/75 ring-1 ring-white/10 shadow-soft'
+/** Shared surface classes (solid black), for panels that are not FeatureCards (e.g. list panels). */
+export const CARD_SURFACE = 'relative overflow-hidden rounded-card bg-[#0B0D12] text-white/75 ring-1 ring-white/10 shadow-soft'
 
 export default function FeatureCard({
   as: Tag = 'article',
