@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { DrawPath } from './Primitives'
-import { useBrandKey, monoTag } from './brandContext'
 
 /* Brand motif linework (FINAL §4.2). Blue lines, per-brand accent (var(--motif)) on nodes/markers only. */
 
@@ -103,53 +102,7 @@ export function Elevation({ className = '', inView = true, stroke = 'rgba(10,120
   )
 }
 
-/** Section divider per brand (§4.2): trace + node / film-strip perforation / dimension line + label. */
-export function SectionDivider({ n, className = '' }) {
-  return (
-    <div className={className}>
-      <SectionDividerInner n={n} />
-    </div>
-  )
-}
-
-function SectionDividerInner({ n }) {
-  const brand = useBrandKey()
-  const tag = monoTag(brand, n)
-  if (brand === 'studios') {
-    return (
-      <div className="container-content">
-        <div className="flex items-center gap-4">
-          <span className="t-mono shrink-0 text-[10px] text-[#0063D1]">{tag}</span>
-          <FilmStrip className="flex-1" frames={10} />
-        </div>
-      </div>
-    )
-  }
-  if (brand === 'tech') {
-    return (
-      <div className="container-content" aria-hidden="true">
-        <svg viewBox="0 0 1200 24" preserveAspectRatio="none" className="h-6 w-full" fill="none">
-          <DrawPath d="M0 12 H560 L572 4 H628 L640 12 H1200" stroke="rgba(10,120,242,0.35)" strokeWidth="1.25" vectorEffect="non-scaling-stroke" />
-        </svg>
-        <div className="-mt-[19px] flex justify-center">
-          <span className="relative grid h-3.5 w-3.5 place-items-center rounded-full border border-[rgba(10,120,242,0.55)] bg-white">
-            <span className="h-1.5 w-1.5 animate-pulsenode rounded-full bg-[var(--motif)]" />
-          </span>
-        </div>
-        <p className="t-mono mt-1 text-center text-[10px] text-[#0063D1]">{`<${tag}/>`}</p>
-      </div>
-    )
-  }
-  // construction + inc: dimension line with ticks and label
-  return (
-    <div className="container-content" aria-hidden="true">
-      <div className="flex items-center gap-2">
-        <span className="h-3 w-px bg-[rgba(10,120,242,0.45)]" />
-        <span className="h-px flex-1 bg-[rgba(10,120,242,0.35)]" />
-        <span className="t-mono text-[10px] text-[#0063D1]">{brand === 'construction' ? `SEC. ${String.fromCharCode(64 + n)}–${String.fromCharCode(64 + n)} · ${tag}` : tag}</span>
-        <span className="h-px flex-1 bg-[rgba(10,120,242,0.35)]" />
-        <span className="h-3 w-px bg-[rgba(10,120,242,0.45)]" />
-      </div>
-    </div>
-  )
+/** Section divider — retired: sections are separated by background colour instead. */
+export function SectionDivider() {
+  return null
 }

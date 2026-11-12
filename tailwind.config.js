@@ -1,10 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 import plugin from 'tailwindcss/plugin'
 
-// Design tokens — docs/FINAL-INFYRO-WEBSITE-SPEC.md §2 ("Precision" language)
+// Design tokens — one blue + navy across every company.
 export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
-  // hover: utilities only apply on devices that can hover (no stuck hover states on touch) — §9
+  // hover: utilities only apply on devices that can hover (no stuck hover states on touch)
   future: { hoverOnlyWhenSupported: true },
   theme: {
     extend: {
@@ -14,9 +14,9 @@ export default {
         ink: { DEFAULT: '#0A1428', 2: '#3A4356' },
         muted: '#6B7280',
         subtle: '#8B93A1',
-        paper: { DEFAULT: '#FFFFFF', 2: '#F6F8FB' },
-        line: 'rgba(10,120,242,0.12)',
-        'line-strong': 'rgba(10,120,242,0.35)',
+        paper: { DEFAULT: '#FFFFFF', 2: '#F3F5F9' },
+        line: '#E5E9F0',
+        'line-strong': '#CBD3DF',
         hairline: '#E3E8F0',
         surface: '#F6F8FB',
         night: '#0A1428',
@@ -35,7 +35,7 @@ export default {
         sans: ['"Inter Variable"', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
       },
       borderRadius: {
-        card: '12px',
+        card: '16px',
         input: '10px',
         media: '16px',
         xl2: '24px',
@@ -70,7 +70,7 @@ export default {
   },
   plugins: [
     plugin(({ addVariant }) => {
-      // Hover-capable fine pointers only (cursor effects, magnetic, tilt) — §9
+      // Hover-capable fine pointers only
       addVariant('can-hover', '@media (hover: hover) and (pointer: fine)')
     }),
   ],

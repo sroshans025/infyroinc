@@ -1,4 +1,4 @@
-// Infyro Inc. landing page — copy is word for word from docs/03-PAGE-CONTENT.md (Part A).
+// The Infyro Group landing page copy.
 import { Lightbulb, ShieldCheck, Award, Users, HeartHandshake, TrendingUp, Eye, Target } from 'lucide-react'
 
 export const hero = {
@@ -10,8 +10,8 @@ export const hero = {
 }
 
 export const companies = {
-  eyebrow: 'Our Companies',
-  title: 'One Vision. Three Businesses.',
+  eyebrow: 'What We Do',
+  title: 'Our Companies',
   items: [
     {
       key: 'tech',
@@ -59,10 +59,6 @@ export const about = {
   ],
   closingParagraph:
     'We believe that sustainable growth comes from strong values, continuous learning, collaboration, and a commitment to quality. As we continue to evolve, our goal is to strengthen each business, explore new opportunities, and establish a trusted presence across the industries we serve.',
-  closing: {
-    title: 'Infyro Inc. — One Vision. Three Businesses. A Future of Possibilities.',
-    sub: 'Innovative Ideas into Digital Reality.',
-  },
 }
 
 export const visionMission = [
@@ -72,14 +68,14 @@ export const visionMission = [
 
 export const values = {
   title: 'Our Core Values',
-  // TODO: optional one-line description per value (the brief gives names only).
+  intro: 'The principles that guide every company in the group — how we work, decide and deliver.',
   items: [
-    { name: 'Innovation', icon: Lightbulb },
-    { name: 'Integrity', icon: ShieldCheck },
-    { name: 'Excellence', icon: Award },
-    { name: 'Collaboration', icon: Users },
-    { name: 'Customer Commitment', icon: HeartHandshake },
-    { name: 'Continuous Growth', icon: TrendingUp },
+    { name: 'Innovation', icon: Lightbulb, text: 'We embrace new ideas and emerging technologies to create solutions that move people and businesses forward.' },
+    { name: 'Integrity', icon: ShieldCheck, text: 'We act with honesty, transparency and accountability in every partnership, project and decision.' },
+    { name: 'Excellence', icon: Award, text: 'We hold ourselves to high standards of quality and care in everything we design, build and deliver.' },
+    { name: 'Collaboration', icon: Users, text: 'We achieve more together — across our three companies and side by side with our clients and partners.' },
+    { name: 'Customer Commitment', icon: HeartHandshake, text: "We put our clients' needs first and build lasting relationships founded on trust and reliability." },
+    { name: 'Continuous Growth', icon: TrendingUp, text: 'We keep learning, improving and evolving — as individuals, as teams and as a business group.' },
   ],
   closing: 'Infyro Inc. — Driven by Values. United by Vision.',
 }

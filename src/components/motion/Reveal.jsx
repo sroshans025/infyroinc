@@ -6,7 +6,7 @@ import { EASE, DURATION, VIEWPORT } from './ease'
  * `scale` switches to the scale-in-media variant (0.96→1).
  * Reduced motion is handled globally by <MotionConfig reducedMotion="user"> (transforms off, opacity kept).
  */
-export default function Reveal({ as = 'div', delay = 0, y = 24, scale = false, className, children, ...rest }) {
+export default function Reveal({ as = 'div', delay = 0, y = 12, scale = false, className, children, ...rest }) {
   const Tag = motion[as] ?? motion.div
   const hidden = scale ? { opacity: 0, scale: 0.96 } : { opacity: 0, y }
   const shown = scale ? { opacity: 1, scale: 1 } : { opacity: 1, y: 0 }

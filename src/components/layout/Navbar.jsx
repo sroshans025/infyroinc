@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import { AnimatePresence, LayoutGroup, motion, useMotionValueEvent, useScroll } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronDown, Menu } from 'lucide-react'
 import SmartLink from '../ui/SmartLink'
 import Button from '../ui/Button'
@@ -39,12 +39,11 @@ function useActiveSection(ids, enabled) {
   return active
 }
 
-const linkBase = 'relative inline-flex h-11 items-center gap-1 text-[14px] transition-colors'
+const linkBase = 'relative inline-flex h-11 items-center gap-1 text-[15px] font-medium transition-colors'
 
 /**
- * One navbar for every page (FINAL §3): logo · links · Companies ⌄ · CTA.
- * 64px desktop / 56px mobile, translucent + blur, hairline after 8px, scroll-progress line,
- * sliding active-section underline, hides on scroll down / shows on scroll up (after 200px).
+ * One navbar for every page: logo (left) · centred links · Companies + CTA (right).
+ * Solid white, fixed, hairline border once scrolled. No scroll-hide or decorative motion.
  */
 export default function Navbar({ brand }) {
   const { pathname, hash } = useLocation()
@@ -55,28 +54,23 @@ export default function Navbar({ brand }) {
   const activeId = useActiveSection(sectionIds, onBrandHome)
 
   const [scrolled, setScrolled] = useState(false)
-  const [hidden, setHidden] = useState(false)
   const [menu, setMenu] = useState(null) // 'companies' | 'training' | null
   const [mobile, setMobile] = useState(false)
-  const lastY = useRef(0)
   const timer = useRef()
   const headerRef = useRef(null)
   const panelRef = useRef(null)
   const companiesBtn = useRef(null)
 
-  const { scrollY, scrollYProgress } = useScroll()
-  useMotionValueEvent(scrollY, 'change', (y) => {
-    setScrolled(y > 8)
-    const down = y > lastY.current
-    if (y > 200 && down && !menu && !mobile) setHidden(true)
-    else if (!down || y <= 200) setHidden(false)
-    lastY.current = y
-  })
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   useEffect(() => {
     setMenu(null)
     setMobile(false)
-    setHidden(false)
   }, [pathname, hash])
 
   const close = useCallback(() => {
@@ -129,29 +123,24 @@ export default function Navbar({ brand }) {
     return onBrandHome && l.id === activeId
   }
 
-  const Underline = () => <motion.span layoutId="nav-underline" className="absolute inset-x-0 -bottom-px h-[2px] rounded-full bg-[#0A78F2]" transition={{ type: 'spring', stiffness: 380, damping: 32 }} />
+  const Underline = () => <span aria-hidden="true" className="absolute inset-x-0 bottom-1 h-[2px] rounded-full bg-[#0A78F2]" />
 
   return (
-    <motion.header
+    <header
       ref={headerRef}
-      animate={{ y: hidden && !mobile ? '-100%' : '0%' }}
-      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-      onFocusCapture={() => setHidden(false)}
-      className={`fixed inset-x-0 top-0 z-50 border-b bg-white/[0.72] backdrop-blur-xl backdrop-saturate-150 transition-colors duration-300 ${scrolled || menu ? 'border-line' : 'border-transparent'}`}
+      className={`fixed inset-x-0 top-0 z-50 border-b bg-white transition-shadow duration-200 ${scrolled || menu ? 'border-line shadow-[0_1px_12px_rgba(10,20,40,0.06)]' : 'border-line'}`}
     >
-      <div className="container-content flex h-14 items-center justify-between gap-6 lg:h-16">
-        <SmartLink href={brand.path} aria-label={`${brand.name} home`} className="shrink-0 rounded-md">
-          <span className="hidden sm:inline-flex">
-            <BrandLogo brand={brand.key} interactive />
-          </span>
-          <span className="inline-flex sm:hidden">
-            <BrandLogo brand={brand.key} compact interactive />
-          </span>
+      <div className="container-content flex h-16 items-center justify-between gap-6 lg:grid lg:h-[72px] lg:grid-cols-[1fr_auto_1fr]">
+        <SmartLink href={brand.path} aria-label={`${brand.key === 'inc' ? 'The Infyro Group' : brand.name} home`} className="shrink-0 justify-self-start rounded-md">
+          {brand.key === 'inc' ? (
+            <BrandLogo brand="inc" groupName />
+          ) : (
+            <BrandLogo brand={brand.key} />
+          )}
         </SmartLink>
 
-        <nav aria-label="Primary" className="hidden flex-1 lg:block">
-          <LayoutGroup id="nav">
-            <ul className="flex items-center gap-7">
+        <nav aria-label="Primary" className="hidden lg:block">
+            <ul className="flex items-center justify-center gap-8">
               {links.map((l) =>
                 l.children ? (
                   <li key={l.label} className="relative" onMouseEnter={() => intentOpen('training')} onMouseLeave={intentClose}>
@@ -160,7 +149,7 @@ export default function Navbar({ brand }) {
                       aria-expanded={menu === 'training'}
                       aria-controls="training-menu"
                       onClick={toggle('training')}
-                      className={`${linkBase} ${isActive(l) ? 'text-ink' : 'text-ink-2 hover:text-ink'}`}
+                      className={`${linkBase} ${isActive(l) ? 'text-brand-ink' : 'text-ink hover:text-brand-ink'}`}
                     >
                       {l.label}
                       <ChevronDown aria-hidden="true" className={`h-3.5 w-3.5 transition-transform duration-200 ${menu === 'training' ? 'rotate-180' : ''}`} />
@@ -176,7 +165,7 @@ export default function Navbar({ brand }) {
                           transition={{ duration: 0.2 }}
                           className="absolute left-1/2 top-full w-60 -translate-x-1/2 rounded-card border border-line bg-white p-2 shadow-float"
                         >
-                          {l.children.map((c, i) => {
+                          {l.children.map((c) => {
                             const on = c.route ? pathname === c.route : onBrandHome && activeId === c.id
                             return (
                               <li key={c.label}>
@@ -186,7 +175,6 @@ export default function Navbar({ brand }) {
                                   onClick={() => setMenu(null)}
                                   className={`flex min-h-[44px] items-center gap-3 rounded-lg px-3 text-[14px] transition-colors hover:bg-blue-50 ${on ? 'text-[#0063D1]' : 'text-ink'}`}
                                 >
-                                  <span className="t-mono text-[10px] text-subtle">{String(i + 1).padStart(2, '0')}</span>
                                   {c.label}
                                 </SmartLink>
                               </li>
@@ -198,7 +186,7 @@ export default function Navbar({ brand }) {
                   </li>
                 ) : (
                   <li key={l.label}>
-                    <SmartLink href={l.href} aria-current={isActive(l) ? 'true' : undefined} className={`${linkBase} ${isActive(l) ? 'text-ink' : 'text-ink-2 hover:text-ink'}`}>
+                    <SmartLink href={l.href} aria-current={isActive(l) ? 'true' : undefined} className={`${linkBase} ${isActive(l) ? 'text-brand-ink' : 'text-ink hover:text-brand-ink'}`}>
                       {l.label}
                       {isActive(l) && <Underline />}
                     </SmartLink>
@@ -206,10 +194,9 @@ export default function Navbar({ brand }) {
                 ),
               )}
             </ul>
-          </LayoutGroup>
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 justify-self-end">
           <div className="hidden lg:block" onMouseEnter={() => intentOpen('companies')} onMouseLeave={intentClose}>
             <button
               ref={companiesBtn}
@@ -217,7 +204,7 @@ export default function Navbar({ brand }) {
               aria-expanded={menu === 'companies'}
               aria-controls="companies-menu"
               onClick={toggle('companies')}
-              className="inline-flex h-10 items-center gap-1 rounded-full px-3 text-[14px] text-ink-2 ring-1 ring-inset ring-line transition-colors hover:text-ink hover:ring-line-strong"
+              className="inline-flex h-10 items-center gap-1 rounded-full px-4 text-[14px] font-medium text-ink ring-1 ring-inset ring-line-strong transition-colors hover:bg-paper-2"
             >
               Companies
               <ChevronDown aria-hidden="true" className={`h-3.5 w-3.5 transition-transform duration-200 ${menu === 'companies' ? 'rotate-180' : ''}`} />
@@ -239,9 +226,6 @@ export default function Navbar({ brand }) {
         </div>
       </div>
 
-      {/* 1px scroll progress */}
-      <motion.span aria-hidden="true" className="absolute inset-x-0 -bottom-px h-px origin-left bg-[#0A78F2]" style={{ scaleX: scrollYProgress }} />
-
       <AnimatePresence>
         {menu === 'companies' && (
           <CompaniesSwitcher
@@ -255,6 +239,6 @@ export default function Navbar({ brand }) {
         )}
       </AnimatePresence>
       <AnimatePresence>{mobile && <MobileMenu id="mobile-menu" brand={brand} cta={cta} onClose={() => setMobile(false)} />}</AnimatePresence>
-    </motion.header>
+    </header>
   )
 }

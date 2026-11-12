@@ -1,4 +1,4 @@
-import InfyroMark from '../brand/InfyroMark'
+import { ArrowUp } from 'lucide-react'
 import SocialLinks from './SocialLinks'
 import { megaFooter } from '../../data/footer'
 
@@ -8,25 +8,22 @@ export const scrollToTop = () => {
   document.getElementById('main')?.focus({ preventScroll: true })
 }
 
-/** [D] © line · legal links · socials · Back to top. */
-export default function LegalBar() {
+/** © line · socials · Back to top ↑ (smooth-scrolls to the top). */
+export default function LegalBar({ copyright = megaFooter.copyright, socials }) {
   const year = new Date().getFullYear()
   return (
     <div className="border-t border-white/[0.08]">
-      <div className="container-content flex flex-col gap-5 py-6 text-[13px] text-[#9CA3AF] lg:flex-row lg:items-center lg:justify-between">
-        <p>{megaFooter.copyright(year)}</p>
+      <div className="container-content flex flex-col gap-4 py-6 text-[13px] text-[#9CA3AF] md:flex-row md:items-center md:justify-between">
+        <p>{copyright(year)}</p>
         <div className="flex items-center gap-4">
-          <SocialLinks />
+          <SocialLinks keys={socials} />
           <button
             type="button"
             onClick={scrollToTop}
-            className="group inline-flex min-h-[44px] items-center gap-1.5 rounded-full px-3 text-[#D1D5DB] hover:text-white"
+            className="inline-flex min-h-[44px] items-center gap-2 rounded-full px-3 font-medium text-[#D1D5DB] ring-1 ring-inset ring-white/15 transition-colors hover:text-white hover:ring-white/40"
           >
             Back to top
-            {/* FINAL §10: the mark rotates 90° on hover */}
-            <span aria-hidden="true" className="inline-flex transition-transform duration-500 ease-apple group-hover:-rotate-90">
-              <InfyroMark size={18} tone="white" />
-            </span>
+            <ArrowUp aria-hidden="true" className="h-4 w-4" />
           </button>
         </div>
       </div>

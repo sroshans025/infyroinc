@@ -1,4 +1,4 @@
-// All footer copy and links — docs/04-FOOTER-SPEC.md.
+// All footer copy and links.
 import { PHONE, EMAILS, ADDRESS, SOCIAL_BY_BRAND } from './contact'
 
 /* ─────────────── Mega footer (landing) ─────────────── */
@@ -12,7 +12,6 @@ export const megaFooter = {
   brand: {
     blurb:
       'Infyro Inc. is the parent company behind Infyro Technologies, Infyro Studios, and Infyro Construction — three specialized businesses united by a shared vision of innovation, creativity, and sustainable growth.',
-    line: 'One Vision. Three Businesses. A Future of Possibilities.',
   },
   columns: [
     {
@@ -52,12 +51,10 @@ export const megaFooter = {
       ],
     },
   ],
-  groupLabel: 'The Infyro Group',
   copyright: (year) => `© ${year} Infyro Inc. All Rights Reserved.`,
 }
 
-/* ─────────────── Brand footers ─────────────── */
-const PART_OF = 'Part of the Infyro Group:'
+/* ─────────────── Company footers ─────────────── */
 
 export const brandFooters = {
   tech: {
@@ -209,12 +206,3 @@ export const brandFooters = {
   },
 }
 
-export const partOfGroup = {
-  label: PART_OF,
-  links: [
-    { label: 'Technologies', href: '/technologies' },
-    { label: 'Studios', href: '/studios' },
-    { label: 'Construction', href: '/construction' },
-  ],
-  parent: { label: 'Infyro Inc.', href: '/' },
-}
