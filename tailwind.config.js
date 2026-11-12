@@ -8,6 +8,8 @@ export default {
   future: { hoverOnlyWhenSupported: true },
   theme: {
     extend: {
+      // Laptop screens with little height (e.g. 1366×768 with browser chrome): used to fit the hero in one screen.
+      screens: { short: { raw: '(min-width: 768px) and (max-height: 760px)' } },
       colors: {
         blue: { DEFAULT: '#0A78F2', 600: '#0063D1', 300: '#3B95F5', 50: '#EAF3FE' },
         navy: '#0A1428',

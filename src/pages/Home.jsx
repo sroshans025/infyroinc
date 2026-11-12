@@ -29,18 +29,19 @@ function Hero() {
     <section
       id="home"
       aria-labelledby="hero-title"
-      className="relative overflow-hidden bg-[radial-gradient(ellipse_80%_70%_at_50%_0%,#E6F0FE_0%,#F7FAFF_45%,#FFFFFF_75%)] pt-[var(--nav-h)]"
+      className="relative flex min-h-[100svh] flex-col overflow-hidden bg-[radial-gradient(ellipse_80%_70%_at_50%_0%,#E6F0FE_0%,#F7FAFF_45%,#FFFFFF_75%)] pt-[var(--nav-h)]"
     >
-      <div className="container-content relative flex flex-col items-center py-16 text-center md:py-24">
-        <span className="grid h-[132px] w-[132px] place-items-center rounded-[32px] bg-white shadow-soft-lg md:h-[164px] md:w-[164px]">
-          <Mark size={110} className="h-[84px] w-auto md:h-[110px]" />
+      {/* Fills exactly one screen: content is centred in the space below the navbar and scales down on short screens. */}
+      <div className="container-content relative flex flex-1 flex-col items-center justify-center py-12 text-center md:py-14 short:py-6">
+        <span className="grid h-[112px] w-[112px] place-items-center rounded-[28px] bg-white shadow-soft-lg md:h-[140px] md:w-[140px] md:rounded-[32px] short:h-[96px] short:w-[96px] short:rounded-[24px]">
+          <Mark size={92} className="h-[72px] w-auto md:h-[92px] short:h-[62px]" />
         </span>
-        <p className="mt-7 text-[15px] font-semibold uppercase tracking-[0.22em] text-brand-ink">INFYRO</p>
-        <h1 id="hero-title" className="t-display mt-4 max-w-4xl">
+        <p className="mt-6 text-[14px] font-semibold uppercase tracking-[0.28em] text-brand-ink short:mt-4">INFYRO</p>
+        <h1 id="hero-title" className="t-display mt-3 max-w-4xl short:text-[44px]">
           {hero.lines[0]} <span className="text-brand">{hero.lines[1]}</span>
         </h1>
-        <p className="mt-5 max-w-2xl text-[16px] leading-[1.75] text-muted md:text-[17px]">{hero.lead}</p>
-        <ButtonGroup primary={hero.primary} secondary={hero.secondary} align="center" className="mt-8 w-full sm:w-auto" />
+        <p className="mt-5 max-w-2xl text-[16px] leading-[1.75] text-muted md:text-[17px] short:mt-3 short:text-[15px] short:leading-[1.6]">{hero.lead}</p>
+        <ButtonGroup primary={hero.primary} secondary={hero.secondary} align="center" className="mt-8 w-full sm:w-auto short:mt-6" />
       </div>
     </section>
   )

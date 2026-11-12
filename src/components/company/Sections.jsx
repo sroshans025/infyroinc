@@ -160,7 +160,7 @@ export function ProgramSection({ id, label, data, tone = 'alt', extra, image, im
         </div>
       </div>
 
-      <Reveal className="mt-8 rounded-card bg-[#0B0D12] p-8 ring-1 ring-white/10 md:p-10">
+      <Reveal className="mt-8 rounded-card bg-[#111827]/[0.86] p-8 ring-1 ring-white/10 md:p-10">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-2xl">
             <h3 className="text-[24px] font-bold leading-tight !text-white md:text-[28px]">{data.cta.title}</h3>

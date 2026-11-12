@@ -15,7 +15,7 @@ export const ACCENTS = [
 export const accentAt = (i) => ACCENTS[i % ACCENTS.length]
 
 /** Shared surface classes, for black panels that are not FeatureCards (e.g. list panels). */
-export const CARD_SURFACE = 'relative overflow-hidden rounded-card bg-[#0B0D12] text-white/75 ring-1 ring-white/10 shadow-soft'
+export const CARD_SURFACE = 'relative overflow-hidden rounded-card bg-[#111827]/[0.86] backdrop-blur-sm text-white/75 ring-1 ring-white/10 shadow-soft'
 
 export default function FeatureCard({
   as: Tag = 'article',
@@ -46,14 +46,14 @@ export default function FeatureCard({
             alt={imageAlt}
             loading="lazy"
             decoding="async"
-            className="aspect-[16/10] w-full object-cover opacity-90 transition-[transform,opacity] duration-700 ease-out group-hover:scale-[1.04] group-hover:opacity-100"
+            className="aspect-[16/10] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
           />
         </div>
       )}
       <div className="relative flex flex-1 flex-col p-6 md:p-7">
         {(Icon || badge) && (
           <span
-            className={`grid h-12 w-12 shrink-0 place-items-center rounded-[12px] bg-gradient-to-br ${a.badge} text-white shadow-lg ${image ? '-mt-12 ring-4 ring-[#0B0D12]' : ''}`}
+            className={`grid h-12 w-12 shrink-0 place-items-center rounded-[12px] bg-gradient-to-br ${a.badge} text-white shadow-lg ${image ? '-mt-12 ring-4 ring-white/15' : ''}`}
           >
             {Icon ? <Icon aria-hidden="true" className="h-5 w-5" strokeWidth={1.75} /> : <span className="text-[15px] font-bold">{badge}</span>}
           </span>
