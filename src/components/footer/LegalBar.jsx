@@ -9,14 +9,14 @@ export const scrollToTop = () => {
 }
 
 /** © line · socials · Back to top ↑ (smooth-scrolls to the top). */
-export default function LegalBar({ copyright = megaFooter.copyright, socials }) {
+export default function LegalBar() {
   const year = new Date().getFullYear()
   return (
     <div className="border-t border-white/[0.08]">
       <div className="container-content flex flex-col gap-4 py-6 text-[13px] text-[#9CA3AF] md:flex-row md:items-center md:justify-between">
-        <p>{copyright(year)}</p>
+        <p>{megaFooter.copyright(year)}</p>
         <div className="flex items-center gap-4">
-          <SocialLinks keys={socials} />
+          <SocialLinks brand="inc" />
           <button
             type="button"
             onClick={scrollToTop}

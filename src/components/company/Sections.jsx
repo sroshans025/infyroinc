@@ -12,7 +12,7 @@ function AboutTiles({ tiles, cols }) {
     <BlockRise as="ul" className={`grid grid-cols-1 gap-4 ${cols}`}>
       {tiles.map(({ label, text, icon: Icon }) => (
         <Block as="li" key={label}>
-          <div className="h-full rounded-card border border-line bg-white p-6">
+          <div className="h-full rounded-card bg-white p-6 shadow-soft">
             <div className="flex items-center gap-3">
               {Icon && (
                 <span className="grid h-9 w-9 place-items-center rounded-[10px] bg-navy">
@@ -66,7 +66,7 @@ export function AboutSplit({ id = 'about', kicker = 'Who We Are', eyebrow, lead,
         <div className="flex flex-col gap-5 lg:col-span-5">
           {image && (
             <Reveal>
-              <img src={image} alt={imageAlt} loading="lazy" decoding="async" className={`w-full rounded-card object-cover ${short ? 'aspect-[4/3] lg:aspect-[4/5]' : 'aspect-[4/3]'}`} />
+              <img src={image} alt={imageAlt} loading="lazy" decoding="async" className={`w-full rounded-card object-cover shadow-soft ${short ? 'aspect-[4/3] lg:aspect-[4/5]' : 'aspect-[4/3]'}`} />
             </Reveal>
           )}
           {!short && tiles.length > 0 && <AboutTiles tiles={tiles} cols={tiles.length > 1 ? 'sm:grid-cols-2 lg:grid-cols-1' : ''} />}
@@ -94,16 +94,18 @@ export function ServiceGrid({ id = 'services', eyebrow = 'Services', title, tagl
       <BlockRise as="ul" className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:mt-12 lg:grid-cols-3">
         {items.map((s) => (
           <Block as="li" key={s.title}>
-            <article className="flex h-full flex-col overflow-hidden rounded-card border border-line bg-white">
-              {s.image && <img src={s.image} alt="" loading="lazy" decoding="async" className="aspect-[16/9] w-full object-cover" />}
-              <div className="flex flex-1 flex-col p-6">
-                <div className="flex items-center gap-3">
-                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-[10px] bg-navy">
-                    <s.icon aria-hidden="true" className="h-5 w-5 text-[#5AA9FF]" strokeWidth={1.75} />
-                  </span>
-                  <h3 className="t-h4">{s.title}</h3>
+            <article className="group flex h-full flex-col overflow-hidden rounded-card bg-white shadow-soft transition-shadow duration-300 hover:shadow-soft-lg">
+              {s.image && (
+                <div className="overflow-hidden">
+                  <img src={s.image} alt="" loading="lazy" decoding="async" className="aspect-[16/9] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]" />
                 </div>
-                <p className="mt-3 text-[14px] leading-[1.7] text-muted">{s.text}</p>
+              )}
+              <div className="relative flex flex-1 flex-col px-6 pb-6 pt-9">
+                <span className={`absolute left-6 grid h-12 w-12 place-items-center rounded-[12px] bg-gradient-to-br from-[#0A78F2] to-[#0052AD] shadow-lift ring-4 ring-white ${s.image ? '-top-6' : 'top-6'}`}>
+                  <s.icon aria-hidden="true" className="h-5 w-5 text-white" strokeWidth={1.75} />
+                </span>
+                <h3 className={`t-h4 ${s.image ? '' : 'mt-12'}`}>{s.title}</h3>
+                <p className="mt-2 text-[14px] leading-[1.7] text-muted">{s.text}</p>
               </div>
             </article>
           </Block>
@@ -136,7 +138,7 @@ export function ProgramSection({ id, label, data, tone = 'alt', extra, image, im
         </div>
         {image && (
           <Reveal>
-            <img src={image} alt={imageAlt} loading="lazy" decoding="async" className="aspect-[4/3] w-full rounded-card object-cover" />
+            <img src={image} alt={imageAlt} loading="lazy" decoding="async" className="aspect-[4/3] w-full rounded-card object-cover shadow-soft" />
           </Reveal>
         )}
       </div>
@@ -148,9 +150,8 @@ export function ProgramSection({ id, label, data, tone = 'alt', extra, image, im
       <BlockRise as="ul" id={`${id}-items`} aria-labelledby={`${id}-items-title`} className="mt-6 hidden grid-cols-2 gap-5 md:grid lg:grid-cols-3">
         {data.domains.map((d) => (
           <Block as="li" key={d.title}>
-            <div className="h-full rounded-card border border-line bg-white p-6">
-              <span aria-hidden="true" className="block h-1 w-8 rounded-full bg-brand" />
-              <h4 className="t-h4 mt-4">{d.title}</h4>
+            <div className="h-full rounded-card border-l-4 border-l-brand bg-white p-6 shadow-soft">
+              <h4 className="t-h4">{d.title}</h4>
               <p className="mt-2 text-[14px] leading-[1.7] text-muted">{d.text}</p>
             </div>
           </Block>
@@ -165,7 +166,7 @@ export function ProgramSection({ id, label, data, tone = 'alt', extra, image, im
       </div>
 
       <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-12">
-        <div className="rounded-card border border-line bg-white p-6 md:p-8 lg:col-span-7">
+        <div className="rounded-card bg-white p-6 shadow-soft md:p-8 lg:col-span-7">
           <h3 className="t-h4">{data.approachTitle}</h3>
           <ul className="mt-4 grid grid-cols-1 gap-x-8 sm:grid-cols-2">
             {data.approach.map((a) => (
@@ -178,7 +179,7 @@ export function ProgramSection({ id, label, data, tone = 'alt', extra, image, im
             ))}
           </ul>
         </div>
-        <div className="flex flex-col rounded-card border border-line bg-white p-6 md:p-8 lg:col-span-5">
+        <div className="flex flex-col rounded-card bg-white p-6 shadow-soft md:p-8 lg:col-span-5">
           <h3 className="t-h4">{data.audienceTitle}</h3>
           <p className="mt-3 text-[14px] leading-[1.7] text-ink-2">{data.audience}</p>
           {data.audienceChips?.length > 0 && (

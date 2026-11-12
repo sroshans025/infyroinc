@@ -5,7 +5,6 @@ import Navbar from './Navbar'
 import ScrollToTop from './ScrollToTop'
 import { PageTransitionProvider } from './PageTransition'
 import MegaFooter from '../footer/MegaFooter'
-import BrandFooter from '../footer/BrandFooter'
 import { BrandCtx } from '../precision/brandContext'
 import { brandForPath } from '../../data/navigation'
 
@@ -16,7 +15,6 @@ import { brandForPath } from '../../data/navigation'
 export default function Layout() {
   const { pathname } = useLocation()
   const brand = brandForPath(pathname)
-  const isLanding = pathname === '/'
 
   return (
     <PageTransitionProvider>
@@ -39,8 +37,7 @@ export default function Layout() {
             </Suspense>
           </main>
 
-          {/* On the landing page the navy "Let's work together" band opens the mega footer (FINAL §7 #6). */}
-          {brand.key === 'inc' ? <MegaFooter letsTalk={!isLanding} /> : <BrandFooter brandKey={brand.key} />}
+          <MegaFooter />
         </div>
       </BrandCtx.Provider>
     </PageTransitionProvider>

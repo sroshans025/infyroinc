@@ -42,6 +42,14 @@ export default {
         card: '0 1px 2px rgba(10,20,40,.04), 0 12px 32px -12px rgba(10,20,40,.14)',
         float: '0 24px 64px -16px rgba(10,20,40,.22)',
         lift: '0 18px 40px -18px rgba(10,120,242,.45)',
+        soft: '0 1px 2px rgba(10,20,40,.05), 0 10px 30px -14px rgba(10,20,40,.16)',
+        'soft-lg': '0 2px 4px rgba(10,20,40,.05), 0 24px 48px -20px rgba(10,20,40,.28)',
+      },
+      keyframes: {
+        marquee: { from: { transform: 'translateX(0)' }, to: { transform: 'translateX(-50%)' } },
+      },
+      animation: {
+        marquee: 'marquee 45s linear infinite',
       },
       transitionTimingFunction: {
         apple: 'cubic-bezier(0.22, 1, 0.36, 1)',

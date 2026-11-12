@@ -1,4 +1,4 @@
-import { ArrowRight, ChevronRight, Mail, Phone } from 'lucide-react'
+import { ArrowRight, Mail, Phone } from 'lucide-react'
 import Seo from '../components/layout/Seo'
 import Section from '../components/ui/Section'
 import SectionHeading from '../components/ui/SectionHeading'
@@ -7,6 +7,7 @@ import Button, { ButtonGroup } from '../components/ui/Button'
 import Reveal from '../components/motion/Reveal'
 import Mark from '../components/brand/Mark'
 import BrandLogo from '../components/brand/BrandLogo'
+import LogoMarquee from '../components/home/LogoMarquee'
 import { BlockRise, Block } from '../components/precision/Primitives'
 import { hero, about, companies, values, visionMission, why, workTogether } from '../data/inc'
 import { PHONE, EMAILS } from '../data/contact'
@@ -14,16 +15,28 @@ import techImg from '../assets/images/home/tech.webp'
 import studiosImg from '../assets/images/home/studios.webp'
 import constructionImg from '../assets/images/home/construction.webp'
 import whyImg from '../assets/images/home/why.webp'
+import aboutImg from '../assets/images/home/about.webp'
+import techPillarImg from '../assets/images/tech/software.webp'
+import studiosPillarImg from '../assets/images/studios/photo.webp'
+import constructionPillarImg from '../assets/images/construction/architecture.webp'
 
 const COMPANY_IMG = { tech: techImg, studios: studiosImg, construction: constructionImg }
+const PILLAR_IMG = { tech: techPillarImg, studios: studiosPillarImg, construction: constructionPillarImg }
 
-/* Hero — the logo is the focus; plain background, no motion. */
+/* Hero — the logo is the focus: large mark + group name, one headline, one line, two buttons. */
 function Hero() {
   return (
-    <section id="home" aria-labelledby="hero-title" className="bg-white pt-[var(--nav-h)]">
-      <div className="container-content flex flex-col items-center py-14 text-center md:py-20">
-        <Mark size={132} className="h-[96px] w-auto md:h-[132px]" />
-        <h1 id="hero-title" className="t-display mt-8 max-w-4xl">
+    <section
+      id="home"
+      aria-labelledby="hero-title"
+      className="relative overflow-hidden bg-[radial-gradient(ellipse_80%_70%_at_50%_0%,#E6F0FE_0%,#F7FAFF_45%,#FFFFFF_75%)] pt-[var(--nav-h)]"
+    >
+      <div className="container-content relative flex flex-col items-center py-16 text-center md:py-24">
+        <span className="grid h-[132px] w-[132px] place-items-center rounded-[32px] bg-white shadow-soft-lg md:h-[164px] md:w-[164px]">
+          <Mark size={110} className="h-[84px] w-auto md:h-[110px]" />
+        </span>
+        <p className="mt-7 text-[15px] font-semibold uppercase tracking-[0.22em] text-brand-ink">The Infyro Group</p>
+        <h1 id="hero-title" className="t-display mt-4 max-w-4xl">
           {hero.lines[0]} <span className="text-brand">{hero.lines[1]}</span>
         </h1>
         <p className="mt-5 max-w-2xl text-[16px] leading-[1.75] text-muted md:text-[17px]">{hero.lead}</p>
@@ -33,44 +46,33 @@ function Hero() {
   )
 }
 
-/* Companies bar — the three companies in clean, readable type. */
-function CompaniesBar() {
-  return (
-    <nav aria-label="Our companies" className="border-y border-line bg-paper-2">
-      <ul className="container-content grid grid-cols-1 divide-y divide-line lg:grid-cols-3 lg:divide-x lg:divide-y-0">
-        {companies.items.map((c) => (
-          <li key={c.key}>
-            <SmartLink href={c.href} className="group flex items-center justify-between gap-4 py-5 lg:px-8 lg:first:pl-0 lg:last:pr-0">
-              <span>
-                <span className="block text-[17px] font-semibold text-ink group-hover:text-brand-ink">{c.name}</span>
-                <span className="mt-0.5 block text-[14px] text-muted">{c.tagline}</span>
-              </span>
-              <ChevronRight aria-hidden="true" className="h-5 w-5 shrink-0 text-subtle group-hover:text-brand-ink" />
-            </SmartLink>
-          </li>
-        ))}
-      </ul>
-    </nav>
-  )
-}
-
-/* Company cards — photo, logo, tagline, description; the whole card is a link. */
+/* Company cards — full-photo cards with the text over a dark gradient; the whole card is a link. */
 function CompanyCards() {
   return (
     <Section id="companies" labelledBy="companies-title">
       <SectionHeading id="companies-title" eyebrow={companies.eyebrow} title={companies.title} />
-      <BlockRise as="ul" className="mt-10 grid grid-cols-1 gap-6 lg:mt-12 lg:grid-cols-3">
+      <BlockRise as="ul" className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3 lg:mt-12">
         {companies.items.map((c) => (
           <Block as="li" key={c.key}>
-            <article className="group relative flex h-full flex-col overflow-hidden rounded-card border border-line bg-white transition-shadow hover:shadow-card md:flex-row lg:flex-col">
-              <img src={COMPANY_IMG[c.key]} alt="" loading="lazy" decoding="async" className="aspect-[16/10] w-full object-cover md:aspect-auto md:w-2/5 lg:aspect-[16/10] lg:w-full" />
-              <div className="flex flex-1 flex-col p-6">
+            <article className="group relative isolate flex h-full min-h-[440px] flex-col justify-end overflow-hidden rounded-card bg-navy shadow-soft transition-shadow duration-300 hover:shadow-soft-lg md:min-h-[480px]">
+              <img
+                src={COMPANY_IMG[c.key]}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                className="absolute inset-0 -z-10 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+              />
+              <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-[#060B16] via-[#060B16]/80 to-[#060B16]/5" />
+              <div className="p-6 md:p-7">
                 <h3>
-                  <BrandLogo brand={c.key} size="nav" />
+                  <BrandLogo brand={c.key} size="nav" tone="light" />
                 </h3>
-                <p className="mt-4 text-[15px] font-semibold text-brand-ink">{c.tagline}</p>
-                <p className="mt-2 text-[14px] leading-[1.65] text-muted">{c.description}</p>
-                <SmartLink href={c.href} className="mt-auto inline-flex items-center gap-1 pt-5 text-[14px] font-semibold text-ink after:absolute after:inset-0 after:content-[''] group-hover:text-brand-ink">
+                <p className="mt-4 text-[15px] font-semibold text-[#7DB8FF]">{c.tagline}</p>
+                <p className="mt-2 text-[14px] leading-[1.65] text-white/80">{c.description}</p>
+                <SmartLink
+                  href={c.href}
+                  className="mt-5 inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-[13px] font-semibold text-ink after:absolute after:inset-0 after:content-['']"
+                >
                   {c.cta}
                   <ArrowRight aria-hidden="true" className="h-4 w-4" />
                 </SmartLink>
@@ -83,37 +85,42 @@ function CompanyCards() {
   )
 }
 
-/* About — preserved layout: statement, two paragraphs, three focus tiles, closing paragraph. */
+/* About — statement + paragraphs beside a photo, three focus cards, closing paragraph. */
 function About() {
   return (
     <Section id="about" tone="alt" labelledBy="about-title">
-      <Reveal className="max-w-4xl">
-        <p className="t-eyebrow text-brand-ink">{about.eyebrow}</p>
-        <h2 id="about-title" className="mt-3 text-[28px] font-bold leading-[1.2] tracking-[-0.02em] text-ink sm:text-[34px] lg:text-[40px]">
-          {about.statement}
-        </h2>
-        <span aria-hidden="true" className="title-rule" />
-      </Reveal>
-
-      <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-10">
-        {about.paragraphs.map((p) => (
-          <Reveal as="p" key={p.slice(0, 24)} className="t-lead text-ink-2">
-            {p}
+      <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-14">
+        <div className="lg:col-span-7">
+          <Reveal>
+            <p className="t-eyebrow text-brand-ink">{about.eyebrow}</p>
+            <h2 id="about-title" className="mt-3 text-[28px] font-bold leading-[1.2] tracking-[-0.02em] text-ink sm:text-[34px] lg:text-[38px]">
+              {about.statement}
+            </h2>
+            <span aria-hidden="true" className="title-rule" />
           </Reveal>
-        ))}
+          {about.paragraphs.map((p) => (
+            <Reveal as="p" key={p.slice(0, 24)} className="t-lead mt-6 text-ink-2">
+              {p}
+            </Reveal>
+          ))}
+        </div>
+        <Reveal className="lg:col-span-5">
+          <img src={aboutImg} alt="A bright, modern office" loading="lazy" decoding="async" className="aspect-[4/3] w-full rounded-card object-cover shadow-soft lg:aspect-[4/5]" />
+        </Reveal>
       </div>
 
-      <BlockRise as="ul" className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3">
+      <BlockRise as="ul" className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
         {about.pillars.map((p) => (
           <Block as="li" key={p.key}>
-            <div className="h-full rounded-card border border-line bg-white p-6">
-              <div className="flex items-center gap-3">
-                <span className="grid h-10 w-10 place-items-center rounded-[10px] bg-navy">
-                  <Mark size={20} />
-                </span>
-                <h3 className="text-[16px] font-semibold text-ink">{p.label}</h3>
+            <div className="flex h-full flex-col overflow-hidden rounded-card bg-white shadow-soft">
+              <img src={PILLAR_IMG[p.key]} alt="" loading="lazy" decoding="async" className="aspect-[16/8] w-full object-cover" />
+              <div className="p-6">
+                <h3 className="flex items-center gap-2.5 text-[16px] font-semibold text-ink">
+                  <span aria-hidden="true" className="h-5 w-1 rounded-full bg-brand" />
+                  {p.label}
+                </h3>
+                <p className="mt-3 text-[14px] leading-[1.7] text-muted">{p.text}</p>
               </div>
-              <p className="mt-4 text-[14px] leading-[1.7] text-muted">{p.text}</p>
             </div>
           </Block>
         ))}
@@ -158,9 +165,9 @@ function Values() {
       <BlockRise as="ul" className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-12 lg:grid-cols-3">
         {values.items.map((v) => (
           <Block as="li" key={v.name}>
-            <div className="h-full rounded-card border border-line bg-white p-6">
-              <span className="grid h-11 w-11 place-items-center rounded-[10px] bg-navy">
-                <v.icon aria-hidden="true" className="h-5 w-5 text-[#5AA9FF]" strokeWidth={1.75} />
+            <div className="group h-full rounded-card border border-line bg-white p-6 shadow-soft transition-shadow duration-300 hover:shadow-soft-lg md:p-7">
+              <span className="grid h-12 w-12 place-items-center rounded-[12px] bg-gradient-to-br from-[#0A78F2] to-[#0052AD] shadow-lift">
+                <v.icon aria-hidden="true" className="h-5 w-5 text-white" strokeWidth={1.75} />
               </span>
               <h3 className="mt-5 text-[17px] font-semibold text-ink">{v.name}</h3>
               <p className="mt-2 text-[14px] leading-[1.7] text-muted">{v.text}</p>
@@ -193,7 +200,7 @@ function Why() {
           </p>
         </div>
         <Reveal>
-          <img src={whyImg} alt="A team discussing ideas in a workshop" loading="lazy" decoding="async" className="aspect-[4/3] w-full rounded-card object-cover" />
+          <img src={whyImg} alt="A team discussing ideas in a workshop" loading="lazy" decoding="async" className="aspect-[4/3] w-full rounded-card object-cover shadow-soft" />
         </Reveal>
       </div>
     </Section>
@@ -241,7 +248,7 @@ export default function Home() {
     <>
       <Seo page="home" />
       <Hero />
-      <CompaniesBar />
+      <LogoMarquee />
       <CompanyCards />
       <About />
       <VisionMission />

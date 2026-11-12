@@ -3,8 +3,9 @@ import { socialList } from '../../data/contact'
 import { useBrandKey } from '../precision/brandContext'
 
 /** 36px circular outline buttons. Profiles a company doesn't have are hidden. */
-export default function SocialLinks({ keys = ['linkedin', 'instagram', 'x'], tone = 'dark' }) {
-  const brand = useBrandKey()
+export default function SocialLinks({ keys = ['linkedin', 'instagram', 'x'], tone = 'dark', brand: brandOverride }) {
+  const ctxBrand = useBrandKey()
+  const brand = brandOverride ?? ctxBrand
   const items = socialList(brand).filter((s) => keys.includes(s.key))
   if (!items.length) return null
   const ring =
