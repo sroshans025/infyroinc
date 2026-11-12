@@ -89,9 +89,9 @@ export default function LogoHero() {
     <section
       id="home"
       aria-labelledby="hero-title"
-      className="relative overflow-hidden bg-[radial-gradient(ellipse_70%_70%_at_75%_45%,#E6F0FE_0%,#F7FAFF_50%,#FFFFFF_80%)] pt-[var(--nav-h)]"
+      className="relative flex flex-col overflow-hidden bg-[radial-gradient(ellipse_70%_70%_at_75%_45%,#E6F0FE_0%,#F7FAFF_50%,#FFFFFF_80%)] pt-[var(--nav-h)] md:min-h-[100svh]"
     >
-      <div className="container-content relative grid grid-cols-1 items-center gap-10 py-12 md:py-14 lg:grid-cols-12 lg:gap-8 lg:py-16 short:lg:py-8">
+      <div className="container-content relative grid flex-1 grid-cols-1 items-center gap-10 py-12 md:py-14 lg:grid-cols-12 lg:gap-8 lg:py-16 short:lg:py-8">
         <div className="text-center lg:col-span-5 lg:text-left">
           <motion.p {...rise(0)} className="t-eyebrow text-brand-ink">
             INFYRO
@@ -117,7 +117,7 @@ export default function LogoHero() {
             animate={reduce ? undefined : { y: [0, -10, 0] }}
             transition={{ duration: 6, ease: 'easeInOut', repeat: Infinity, delay: 1.4 }}
           >
-            <div className="relative aspect-[79/104] h-[240px] sm:h-[290px] lg:h-[min(56vh,440px)] short:lg:h-[min(64vh,380px)]" role="group" aria-label="Our companies">
+            <div className="relative aspect-[79/104] h-[240px] sm:h-[290px] lg:h-[min(64vh,520px)] short:lg:h-[min(68vh,420px)]" role="group" aria-label="Our companies">
               {FACET_KEYS.map((k, i) => (
                 <Piece key={k} k={k} i={i} selected={sel} onSelect={setSel} reduce={reduce} />
               ))}
