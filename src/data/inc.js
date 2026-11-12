@@ -1,4 +1,4 @@
-// The Infyro Group landing page copy.
+// INFYRO landing page copy.
 import { Lightbulb, ShieldCheck, Award, Users, HeartHandshake, TrendingUp, Eye, Target } from 'lucide-react'
 
 export const hero = {

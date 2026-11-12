@@ -35,7 +35,7 @@ function Hero() {
         <span className="grid h-[132px] w-[132px] place-items-center rounded-[32px] bg-white shadow-soft-lg md:h-[164px] md:w-[164px]">
           <Mark size={110} className="h-[84px] w-auto md:h-[110px]" />
         </span>
-        <p className="mt-7 text-[15px] font-semibold uppercase tracking-[0.22em] text-brand-ink">The Infyro Group</p>
+        <p className="mt-7 text-[15px] font-semibold uppercase tracking-[0.22em] text-brand-ink">INFYRO</p>
         <h1 id="hero-title" className="t-display mt-4 max-w-4xl">
           {hero.lines[0]} <span className="text-brand">{hero.lines[1]}</span>
         </h1>

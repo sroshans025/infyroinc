@@ -80,20 +80,28 @@ export default function MobileMenu({ id, brand, cta, onClose }) {
             ))}
           </ul>
 
-          <div className="mt-8">
-            <p className="container-content t-eyebrow text-muted">Our Companies</p>
-            <ul className="no-scrollbar mt-4 flex snap-x snap-mandatory scroll-px-4 gap-3 overflow-x-auto px-4 pb-2 sm:scroll-px-6 sm:px-6">
+          <div className="container-content mt-8">
+            <p className="t-eyebrow text-muted">Companies</p>
+            <ul className="mt-3 border-t-2 border-[#0A78F2]">
+              <li>
+                <SmartLink href="/#companies" onClick={onClose} className="flex min-h-[48px] items-center justify-between border-b border-line text-[16px] font-medium text-ink">
+                  Overview
+                  <ChevronRight aria-hidden="true" className="h-4 w-4 text-muted" />
+                </SmartLink>
+              </li>
               {COMPANY_KEYS.map((k) => {
                 const b = BRANDS[k]
+                const here = brand.key === k
                 return (
-                  <li key={k} className="w-[72%] shrink-0 snap-start sm:w-[44%]">
-                    <SmartLink href={b.path} onClick={onClose} className={`relative flex h-full flex-col rounded-card border bg-white p-5 ${brand.key === k ? 'border-brand' : 'border-line'}`}>
-                      <BrandLogo brand={k} />
-                      <span className="mt-3 text-[13px] text-muted">{b.tagline}</span>
-                      <span className="mt-4 inline-flex items-center gap-0.5 text-[13px] font-semibold text-[#0063D1]">
-                        {brand.key === k ? "You're here" : 'Explore'}
-                        <ChevronRight aria-hidden="true" className="h-4 w-4" />
-                      </span>
+                  <li key={k}>
+                    <SmartLink
+                      href={b.path}
+                      onClick={onClose}
+                      aria-current={here ? 'page' : undefined}
+                      className={`flex min-h-[48px] items-center justify-between border-b border-line text-[16px] ${here ? 'font-semibold text-brand-ink' : 'font-medium text-ink'}`}
+                    >
+                      {b.name}
+                      <ChevronRight aria-hidden="true" className="h-4 w-4 text-muted" />
                     </SmartLink>
                   </li>
                 )

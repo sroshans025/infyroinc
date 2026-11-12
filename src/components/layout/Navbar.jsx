@@ -5,9 +5,8 @@ import { ChevronDown, Menu } from 'lucide-react'
 import SmartLink from '../ui/SmartLink'
 import Button from '../ui/Button'
 import BrandLogo from '../brand/BrandLogo'
-import CompaniesSwitcher from './CompaniesSwitcher'
 import MobileMenu from './MobileMenu'
-import { NAV_LINKS, NAV_CTA } from '../../data/navigation'
+import { NAV_LINKS, NAV_CTA, BRANDS, COMPANY_KEYS } from '../../data/navigation'
 import { useEscape } from '../../lib/hooks'
 
 /** Tracks which section id is currently in the middle band of the viewport. */
@@ -40,27 +39,36 @@ function useActiveSection(ids, enabled) {
   return active
 }
 
+/** "Companies ⌄" — a plain dropdown list, the same on every page. */
+const COMPANIES_MENU = {
+  label: 'Companies',
+  children: [
+    { label: 'Overview', href: '/#companies', id: 'companies', home: true },
+    ...COMPANY_KEYS.map((k) => ({ label: BRANDS[k].name, href: BRANDS[k].path, route: BRANDS[k].path })),
+  ],
+}
+
 const linkBase = 'relative inline-flex h-11 items-center gap-1 text-[15px] font-medium transition-colors'
+const slug = (s) => s.toLowerCase().replace(/[^a-z]+/g, '-')
 
 /**
- * One navbar for every page: logo (left) · centred links · Companies + CTA (right).
- * Solid white, fixed, hairline border once scrolled. No scroll-hide or decorative motion.
+ * One navbar for every page: logo (left) · links with simple dropdowns (centre) · CTA (right).
+ * Solid white, fixed, hairline border.
  */
 export default function Navbar({ brand }) {
   const { pathname, hash } = useLocation()
-  const links = NAV_LINKS[brand.key]
+  const links = [...NAV_LINKS[brand.key], COMPANIES_MENU]
   const cta = NAV_CTA[brand.key]
   const onBrandHome = pathname === brand.path
-  const sectionIds = links.flatMap((l) => (l.children ? l.children.filter((c) => c.id).map((c) => c.id) : l.id ? [l.id] : []))
+  const sectionIds = NAV_LINKS[brand.key].flatMap((l) => (l.children ? l.children.filter((c) => c.id).map((c) => c.id) : l.id ? [l.id] : []))
   const activeId = useActiveSection(sectionIds, onBrandHome)
 
   const [scrolled, setScrolled] = useState(false)
-  const [menu, setMenu] = useState(null) // 'companies' | 'training' | null
+  const [menu, setMenu] = useState(null) // slug of the open dropdown, or null
   const [mobile, setMobile] = useState(false)
   const timer = useRef()
   const headerRef = useRef(null)
-  const panelRef = useRef(null)
-  const companiesBtn = useRef(null)
+  const buttons = useRef({})
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
@@ -76,7 +84,7 @@ export default function Navbar({ brand }) {
 
   const close = useCallback(() => {
     setMenu((m) => {
-      if (m === 'companies') companiesBtn.current?.focus()
+      if (m) buttons.current[m]?.focus()
       return null
     })
   }, [])
@@ -90,127 +98,100 @@ export default function Navbar({ brand }) {
     return () => document.removeEventListener('pointerdown', onDown)
   }, [menu])
 
-  // Focus trap inside the open Companies panel (+ its trigger)
-  useEffect(() => {
-    if (menu !== 'companies') return undefined
-    const onKey = (e) => {
-      if (e.key !== 'Tab' || !panelRef.current) return
-      const f = [companiesBtn.current, ...panelRef.current.querySelectorAll('a[href]')]
-      const i = f.indexOf(document.activeElement)
-      if (i === -1) return
-      e.preventDefault()
-      f[(i + (e.shiftKey ? -1 : 1) + f.length) % f.length]?.focus()
-    }
-    document.addEventListener('keydown', onKey)
-    return () => document.removeEventListener('keydown', onKey)
-  }, [menu])
-
   const intentOpen = (m) => {
     clearTimeout(timer.current)
-    timer.current = setTimeout(() => setMenu(m), 120)
+    timer.current = setTimeout(() => setMenu(m), 100)
   }
   const intentClose = () => {
     clearTimeout(timer.current)
-    timer.current = setTimeout(() => setMenu(null), 180)
+    timer.current = setTimeout(() => setMenu(null), 160)
   }
   const toggle = (m) => (e) => {
     clearTimeout(timer.current)
     setMenu((cur) => (cur === m ? null : m))
-    if (m === 'companies' && e.detail === 0) setTimeout(() => panelRef.current?.querySelector('a[href]')?.focus(), 60)
+    // Keyboard activation: move focus into the list
+    if (e.detail === 0) setTimeout(() => document.querySelector(`#${m}-menu a[href]`)?.focus(), 60)
   }
 
-  const isActive = (l) => {
-    if (l.children) return l.children.some((c) => (c.route ? pathname === c.route : c.id === activeId && onBrandHome))
-    return onBrandHome && l.id === activeId
-  }
+  const childActive = (c) => (c.route ? pathname.startsWith(c.route) : c.home ? false : c.id === activeId && onBrandHome)
+  const isActive = (l) => (l.children ? l.children.some(childActive) : onBrandHome && l.id === activeId)
 
   const Underline = () => <span aria-hidden="true" className="absolute inset-x-0 bottom-1 h-[2px] rounded-full bg-[#0A78F2]" />
 
   return (
     <header
       ref={headerRef}
-      className={`fixed inset-x-0 top-0 z-50 border-b bg-white transition-shadow duration-200 ${scrolled || menu ? 'border-line shadow-[0_1px_12px_rgba(10,20,40,0.06)]' : 'border-line'}`}
+      className={`fixed inset-x-0 top-0 z-50 border-b border-line bg-white transition-shadow duration-200 ${scrolled || menu ? 'shadow-[0_1px_12px_rgba(10,20,40,0.06)]' : ''}`}
     >
       <div className="container-content flex h-16 items-center justify-between gap-6 lg:grid lg:h-[72px] lg:grid-cols-[1fr_auto_1fr]">
-        <SmartLink href={brand.path} aria-label={`${brand.key === 'inc' ? 'The Infyro Group' : brand.name} home`} className="shrink-0 justify-self-start rounded-md">
-          {brand.key === 'inc' ? (
-            <BrandLogo brand="inc" groupName />
-          ) : (
-            <BrandLogo brand={brand.key} />
-          )}
+        <SmartLink href={brand.path} aria-label={`${brand.key === 'inc' ? 'INFYRO' : brand.name} home`} className="shrink-0 justify-self-start rounded-md">
+          {brand.key === 'inc' ? <BrandLogo brand="inc" groupName /> : <BrandLogo brand={brand.key} />}
         </SmartLink>
 
         <nav aria-label="Primary" className="hidden lg:block">
-            <ul className="flex items-center justify-center gap-8">
-              {links.map((l) =>
-                l.children ? (
-                  <li key={l.label} className="relative" onMouseEnter={() => intentOpen('training')} onMouseLeave={intentClose}>
-                    <button
-                      type="button"
-                      aria-expanded={menu === 'training'}
-                      aria-controls="training-menu"
-                      onClick={toggle('training')}
-                      className={`${linkBase} ${isActive(l) ? 'text-brand-ink' : 'text-ink hover:text-brand-ink'}`}
-                    >
-                      {l.label}
-                      <ChevronDown aria-hidden="true" className={`h-3.5 w-3.5 transition-transform duration-200 ${menu === 'training' ? 'rotate-180' : ''}`} />
-                      {isActive(l) && <Underline />}
-                    </button>
-                    <AnimatePresence>
-                      {menu === 'training' && (
-                        <motion.ul
-                          id="training-menu"
-                          initial={{ opacity: 0, y: -6 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -6 }}
-                          transition={{ duration: 0.2 }}
-                          className="absolute left-1/2 top-full w-60 -translate-x-1/2 rounded-card border border-line bg-white p-2 shadow-float"
-                        >
-                          {l.children.map((c) => {
-                            const on = c.route ? pathname === c.route : onBrandHome && activeId === c.id
-                            return (
-                              <li key={c.label}>
-                                <SmartLink
-                                  href={c.href}
-                                  aria-current={on ? 'true' : undefined}
-                                  onClick={() => setMenu(null)}
-                                  className={`flex min-h-[44px] items-center gap-3 rounded-lg px-3 text-[14px] transition-colors hover:bg-blue-50 ${on ? 'text-[#0063D1]' : 'text-ink'}`}
-                                >
-                                  {c.label}
-                                </SmartLink>
-                              </li>
-                            )
-                          })}
-                        </motion.ul>
-                      )}
-                    </AnimatePresence>
-                  </li>
-                ) : (
+          <ul className="flex items-center justify-center gap-7 xl:gap-8">
+            {links.map((l) => {
+              if (!l.children) {
+                return (
                   <li key={l.label}>
                     <SmartLink href={l.href} aria-current={isActive(l) ? 'true' : undefined} className={`${linkBase} ${isActive(l) ? 'text-brand-ink' : 'text-ink hover:text-brand-ink'}`}>
                       {l.label}
                       {isActive(l) && <Underline />}
                     </SmartLink>
                   </li>
-                ),
-              )}
-            </ul>
+                )
+              }
+              const m = slug(l.label)
+              const open = menu === m
+              return (
+                <li key={l.label} className="relative" onMouseEnter={() => intentOpen(m)} onMouseLeave={intentClose}>
+                  <button
+                    ref={(el) => (buttons.current[m] = el)}
+                    type="button"
+                    aria-expanded={open}
+                    aria-controls={`${m}-menu`}
+                    onClick={toggle(m)}
+                    className={`${linkBase} ${open || isActive(l) ? 'text-brand-ink' : 'text-ink hover:text-brand-ink'}`}
+                  >
+                    {l.label}
+                    <ChevronDown aria-hidden="true" className={`h-3.5 w-3.5 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
+                    {isActive(l) && <Underline />}
+                  </button>
+                  <AnimatePresence>
+                    {open && (
+                      <motion.ul
+                        id={`${m}-menu`}
+                        initial={{ opacity: 0, y: -4 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -4 }}
+                        transition={{ duration: 0.15 }}
+                        className="absolute left-0 top-[calc(100%+14px)] before:absolute before:inset-x-0 before:-top-[16px] before:h-[14px] before:content-[''] min-w-[250px] border-t-2 border-[#0A78F2] bg-white py-2 shadow-[0_12px_32px_-8px_rgba(10,20,40,0.22)]"
+                      >
+                        {l.children.map((c) => {
+                          const on = childActive(c)
+                          return (
+                            <li key={c.label}>
+                              <SmartLink
+                                href={c.href}
+                                aria-current={on ? 'page' : undefined}
+                                onClick={() => setMenu(null)}
+                                className={`flex min-h-[44px] items-center px-5 text-[15px] transition-colors hover:bg-paper-2 hover:text-brand-ink ${on ? 'font-medium text-brand-ink' : 'text-ink'}`}
+                              >
+                                {c.label}
+                              </SmartLink>
+                            </li>
+                          )
+                        })}
+                      </motion.ul>
+                    )}
+                  </AnimatePresence>
+                </li>
+              )
+            })}
+          </ul>
         </nav>
 
         <div className="flex items-center gap-2 justify-self-end">
-          <div className="hidden lg:block" onMouseEnter={() => intentOpen('companies')} onMouseLeave={intentClose}>
-            <button
-              ref={companiesBtn}
-              type="button"
-              aria-expanded={menu === 'companies'}
-              aria-controls="companies-menu"
-              onClick={toggle('companies')}
-              className="inline-flex h-10 items-center gap-1 rounded-full px-4 text-[14px] font-medium text-ink ring-1 ring-inset ring-line-strong transition-colors hover:bg-paper-2"
-            >
-              Companies
-              <ChevronDown aria-hidden="true" className={`h-3.5 w-3.5 transition-transform duration-200 ${menu === 'companies' ? 'rotate-180' : ''}`} />
-            </button>
-          </div>
           <Button href={cta.href} size="sm" className="hidden md:inline-flex">
             {cta.label}
           </Button>
@@ -227,18 +208,6 @@ export default function Navbar({ brand }) {
         </div>
       </div>
 
-      <AnimatePresence>
-        {menu === 'companies' && (
-          <CompaniesSwitcher
-            id="companies-menu"
-            panelRef={panelRef}
-            current={brand.key}
-            onNavigate={() => setMenu(null)}
-            onMouseEnter={() => intentOpen('companies')}
-            onMouseLeave={intentClose}
-          />
-        )}
-      </AnimatePresence>
       <AnimatePresence>{mobile && <MobileMenu id="mobile-menu" brand={brand} cta={cta} onClose={() => setMobile(false)} />}</AnimatePresence>
     </header>
   )

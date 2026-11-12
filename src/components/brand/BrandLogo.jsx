@@ -10,7 +10,7 @@ const SIZES = {
 
 /**
  * Logo: the Infyro mark + "Infyro" wordmark + company sub-name.
- * `groupName`: mark + the plain text "The Infyro Group" (navbar on group pages).
+ * `groupName`: mark + the plain text "INFYRO" (navbar on group pages).
  * `compact`: mark + sub-name only (narrow phones). `noMark`: wordmark only.
  */
 export default function BrandLogo({ brand = 'inc', size = 'nav', tone = 'dark', compact = false, noMark = false, groupName = false, className = '' }) {
@@ -23,7 +23,7 @@ export default function BrandLogo({ brand = 'inc', size = 'nav', tone = 'dark', 
     return (
       <span className={`inline-flex items-center ${s.gap} ${className}`}>
         <Mark size={s.mark} color={light ? '#FFFFFF' : '#0A78F2'} />
-        <span className={`whitespace-nowrap font-bold tracking-[-0.02em] ${s.group} ${light ? 'text-white' : 'text-ink'}`}>The Infyro Group</span>
+        <span className={`whitespace-nowrap font-bold tracking-[0.08em] ${s.group} ${light ? 'text-white' : 'text-ink'}`}>INFYRO</span>
       </span>
     )
   }
