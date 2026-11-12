@@ -20,8 +20,6 @@ export default {
         hairline: '#E3E8F0',
         surface: '#F6F8FB',
         night: '#0A1428',
-        cinema: '#0B0B0C',
-        motif: 'var(--motif)',
         brand: {
           DEFAULT: 'var(--brand)',
           hover: 'var(--brand-hover)',
@@ -47,24 +45,6 @@ export default {
       },
       transitionTimingFunction: {
         apple: 'cubic-bezier(0.22, 1, 0.36, 1)',
-      },
-      keyframes: {
-        kenburns: { from: { transform: 'scale(1)' }, to: { transform: 'scale(1.05)' } },
-        floaty: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-4px)' } },
-        scan: { '0%': { transform: 'translateY(0)', opacity: '0' }, '10%': { opacity: '1' }, '85%': { opacity: '1' }, '100%': { transform: 'translateY(100svh)', opacity: '0' } },
-        spinslow: { to: { transform: 'rotate(360deg)' } },
-        blink: { '0%, 49%': { opacity: '1' }, '50%, 100%': { opacity: '0.2' } },
-        pulsenode: { '0%, 100%': { opacity: '0.35' }, '50%': { opacity: '1' } },
-        trace: { from: { strokeDashoffset: '100' }, to: { strokeDashoffset: '0' } },
-      },
-      animation: {
-        kenburns: 'kenburns 12s ease-out forwards',
-        floaty: 'floaty 6s ease-in-out infinite',
-        scan: 'scan 1.1s cubic-bezier(0.22,1,0.36,1) forwards',
-        spinslow: 'spinslow 90s linear infinite',
-        blink: 'blink 1.2s steps(1) infinite',
-        pulsenode: 'pulsenode 2.4s ease-in-out infinite',
-        trace: 'trace 1.6s linear infinite',
       },
     },
   },

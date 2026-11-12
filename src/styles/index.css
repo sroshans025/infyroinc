@@ -10,7 +10,6 @@
   --brand-rgb: 10 120 242;
   --brand-ink: #0063d1; /* AA-safe blue for small text on white */
   --brand-ink-hover: #0052ad;
-  --motif: #0a78f2;
   --nav-h: 64px;
 }
 @media (min-width: 1024px) {

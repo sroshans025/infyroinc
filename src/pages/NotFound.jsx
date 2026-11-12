@@ -1,49 +1,33 @@
-import { motion, useReducedMotion } from 'framer-motion'
+import { ChevronRight } from 'lucide-react'
 import Seo from '../components/layout/Seo'
-import { PillLink } from '../components/ui/Button'
 import Button from '../components/ui/Button'
-import GridSpotlight from '../components/precision/GridSpotlight'
-import { Stencil } from '../components/precision/Primitives'
-import { FACETS, FACET_KEYS, VIEWBOX, BLUE } from '../components/brand/InfyroMark'
+import SmartLink from '../components/ui/SmartLink'
+import Mark from '../components/brand/Mark'
 import { BRANDS, COMPANY_KEYS } from '../data/navigation'
 
-const DRIFT = { tech: { x: 18, y: -16, r: -8 }, studios: { x: -20, y: 18, r: 7 }, construction: { x: 22, y: 6, r: 5 } }
-
-/** 404 (FINAL §5.2): the facets drift apart and slowly float. */
+/** 404 — plain message with links back to the group and the three companies. */
 export default function NotFound() {
-  const reduce = useReducedMotion()
   return (
     <>
       <Seo page="notFound" />
-      <section className="relative flex min-h-[86svh] items-center overflow-hidden bg-white pb-20 pt-[calc(var(--nav-h)+40px)]" aria-labelledby="nf-title">
-        <GridSpotlight variant="blueprint" />
-        <div className="container-content relative text-center">
-          <svg viewBox={VIEWBOX} className="mx-auto h-40 w-auto overflow-visible" aria-hidden="true">
-            {FACET_KEYS.map((k, i) => (
-              <motion.path
-                key={k}
-                d={FACETS[k]}
-                fill={BLUE}
-                stroke={BLUE}
-                strokeWidth={4}
-                strokeLinejoin="round"
-                style={{ transformBox: 'fill-box', transformOrigin: 'center' }}
-                animate={reduce ? { x: DRIFT[k].x, y: DRIFT[k].y } : { x: DRIFT[k].x, y: [DRIFT[k].y, DRIFT[k].y - 5, DRIFT[k].y], rotate: DRIFT[k].r }}
-                transition={reduce ? { duration: 0 } : { x: { duration: 1.2, ease: 'easeOut' }, rotate: { duration: 1.2 }, y: { duration: 5 + i, repeat: Infinity, ease: 'easeInOut' } }}
-              />
-            ))}
-          </svg>
-          <Stencil n={404} label="Off-grid" className="mt-12" />
-          <h1 id="nf-title" className="t-h1 mt-4">
-            This page went off-grid.
+      <section className="flex min-h-[70svh] items-center bg-white pb-16 pt-[calc(var(--nav-h)+40px)]" aria-labelledby="nf-title">
+        <div className="container-content text-center">
+          <Mark size={88} className="mx-auto" />
+          <p className="t-eyebrow mt-8 text-brand-ink">Error 404</p>
+          <h1 id="nf-title" className="t-h1 mt-3">
+            Page not found
           </h1>
-          <Button href="/" className="mt-10">
-            Go to Infyro Inc.
+          <p className="mx-auto mt-4 max-w-md text-[16px] text-muted">The page you are looking for does not exist or has moved.</p>
+          <Button href="/" className="mt-8">
+            Go to the home page
           </Button>
-          <ul className="mt-10 flex flex-col items-center justify-center gap-1 sm:flex-row sm:gap-8">
+          <ul className="mt-8 flex flex-col items-center justify-center gap-2 sm:flex-row sm:gap-8">
             {COMPANY_KEYS.map((k) => (
               <li key={k}>
-                <PillLink href={BRANDS[k].path}>{BRANDS[k].name}</PillLink>
+                <SmartLink href={BRANDS[k].path} className="inline-flex min-h-[44px] items-center gap-0.5 text-[15px] font-semibold text-brand-ink hover:underline">
+                  {BRANDS[k].name}
+                  <ChevronRight aria-hidden="true" className="h-4 w-4" />
+                </SmartLink>
               </li>
             ))}
           </ul>

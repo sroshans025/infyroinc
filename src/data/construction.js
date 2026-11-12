@@ -1,12 +1,9 @@
-// Infyro Construction — copy is word for word from docs/03-PAGE-CONTENT.md (Part D).
+// Infyro Construction page copy.
 import { Home, Building2, DraftingCompass, Hammer, Sofa, ClipboardCheck, Eye, Target } from 'lucide-react'
-
-// TODO: replace every `image: null` with real architecture photography (golden-hour exteriors, interiors).
 
 export const hero = {
   title: 'Building Trust. Creating Futures.',
   small: 'An Infyro Inc. Company.',
-  image: null, // TODO: full-bleed golden-hour architectural image
   primary: { label: 'Book a Consultation', href: '#booking' },
   secondary: { label: 'Our Services', href: '#services' },
 }
@@ -17,7 +14,6 @@ export const about = {
     'Infyro Construction is dedicated to transforming visions into enduring structures through quality craftsmanship, thoughtful planning, and reliable construction solutions. As a subsidiary of Infyro Inc., we focus on creating residential and commercial spaces that combine modern design, functionality, and lasting value.',
     'Driven by integrity, innovation, and customer satisfaction, we strive to build more than structures — we build trust, lasting relationships, and a foundation for a better future.',
   ],
-  image: null, // TODO: tall image (interior or façade)
   signoff: ['Infyro Construction — Building Trust. Creating Futures.', 'An Infyro Inc. Company.'],
 }
 
@@ -30,10 +26,9 @@ export const services = {
   title: 'Our Services',
   tagline: 'Building Excellence. Delivering Quality.',
   intro: 'At Infyro Construction, we provide thoughtfully planned construction solutions designed around quality, functionality, and lasting value.',
-  // First two render as large image tiles; the rest as icon tiles.
   items: [
-    { n: '1', title: 'Residential Construction', text: 'Building modern homes, villas, and residential spaces tailored to your lifestyle.', icon: Home, image: null, feature: true },
-    { n: '2', title: 'Commercial Construction', text: 'Developing functional offices, commercial buildings, and business spaces.', icon: Building2, image: null, feature: true },
+    { n: '1', title: 'Residential Construction', text: 'Building modern homes, villas, and residential spaces tailored to your lifestyle.', icon: Home },
+    { n: '2', title: 'Commercial Construction', text: 'Developing functional offices, commercial buildings, and business spaces.', icon: Building2 },
     { n: '3', title: 'Architectural Design & Planning', text: 'Transforming ideas into practical, aesthetically appealing architectural designs.', icon: DraftingCompass },
     { n: '4', title: 'Renovation & Remodeling', text: 'Upgrading existing spaces with modern designs, improved functionality, and quality finishes.', icon: Hammer },
     { n: '5', title: 'Interior Design & Finishing', text: 'Creating comfortable, elegant interiors that balance style and practicality.', icon: Sofa },
@@ -46,21 +41,14 @@ export const services = {
   },
 }
 
-// Signature section — Project Planner (docs/06 §3.3). Uses only the six services from the brief.
-export const planner = {
-  title: 'What are you planning?',
-  button: 'Continue to Enquiry',
-  closing: services.closing.sub,
-}
-
 export const consultation = {
   title: 'Book a Consultation',
   sub: "Let's Build Your Vision.",
   body: 'Planning to build your dream home, develop a commercial space, or renovate an existing property? Infyro Construction is here to help turn your vision into reality with thoughtful planning and reliable construction solutions.',
   enquiryTitle: 'Submit Your Project Enquiry',
   enquiryBody: 'Share your project details with us, and our team can connect with you to discuss your requirements and the next steps.',
-  helper: 'Click below to email your project enquiry to our team.',
-  button: 'Email Your Consultation Request',
+  helper: 'Click below to submit your project enquiry through our Google Form.',
+  button: 'Book a Consultation',
   signoff: ['Infyro Construction — Building Trust. Creating Futures.', 'An Infyro Inc. Company.'],
 }
 

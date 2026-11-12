@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { LoaderCircle } from 'lucide-react'
-import InfyroMark from '../brand/InfyroMark'
+import { CheckCircle2 } from 'lucide-react'
 import Field from './Field'
 import Button from '../ui/Button'
 import useFormValidation from './useFormValidation'
@@ -62,18 +62,7 @@ export default function ContactForm({ config, inbox, preset, className = '' }) {
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col items-start gap-5 rounded-card border border-line-strong bg-blue-50 p-8 outline-none md:p-10"
           >
-            {/* FINAL §10 "Form success": the mark assembles inside a check-circle */}
-            <span aria-hidden="true" className="relative grid h-16 w-16 place-items-center">
-              <svg viewBox="0 0 64 64" className="absolute inset-0 h-full w-full -rotate-90" fill="none">
-                <motion.circle cx="32" cy="32" r="30" stroke="#0A78F2" strokeWidth="2" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.8, ease: 'easeInOut' }} />
-              </svg>
-              <InfyroMark size={30} assemble />
-              <span className="absolute -bottom-1 -right-1 grid h-6 w-6 place-items-center rounded-full bg-[#0A78F2] text-white">
-                <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <motion.path d="M3.5 8.5 L6.5 11.5 L12.5 4.5" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ delay: 0.7, duration: 0.4 }} />
-                </svg>
-              </span>
-            </span>
+            <CheckCircle2 aria-hidden="true" className="h-12 w-12 text-brand" strokeWidth={1.75} />
             <p className="t-h4">{config.successMessage}</p>
             <Button variant="secondary" size="sm" onClick={() => setStatus('idle')}>
               Send another message

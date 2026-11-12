@@ -30,8 +30,9 @@ function AboutTiles({ tiles, cols }) {
 }
 
 export function AboutSplit({ id = 'about', kicker = 'Who We Are', eyebrow, lead, paragraphs = [], tiles = [], pills, closing = [], tone = 'alt', image, imageAlt = '' }) {
-  // A short text (lead only) keeps the statement cards beside it so neither column looks empty.
-  const short = paragraphs.length === 0 && !pills
+  // Two or more statement cards (e.g. Vision + Mission) sit under the text, so neither column looks empty;
+  // a single card stays under the photo.
+  const short = tiles.length > 1
   return (
     <Section id={id} tone={tone} labelledBy={`${id}-title`}>
       <div className={`grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14 ${short ? 'lg:items-center' : ''}`}>

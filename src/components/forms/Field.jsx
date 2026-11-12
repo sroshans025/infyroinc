@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
-import { Ticks } from '../precision/Primitives'
 
 const control =
   'peer w-full rounded-input border bg-paper-2 px-4 text-[16px] text-ink transition-[background-color,border-color,box-shadow] duration-200 focus:bg-white focus:outline-none focus:ring-4 focus:ring-[rgb(var(--brand-rgb)/0.12)]'
@@ -77,7 +76,6 @@ export default function Field({ field, value, error, onChange, onBlur, idPrefix 
             </span>
           )}
         </label>
-        <Ticks on={focus} className={focus ? '' : 'opacity-0'} />
       </div>
       {error && (
         <p id={errId} className="mt-2 text-[13px] text-red-600">

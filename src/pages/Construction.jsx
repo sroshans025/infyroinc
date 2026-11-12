@@ -4,43 +4,66 @@ import { AboutSplit, ServiceGrid, BookingBand } from '../components/company/Sect
 import ContactSplit from '../components/company/ContactSplit'
 import usePresetFromUrl from '../lib/usePresetFromUrl'
 import { hero, about, visionMission, services, consultation, contact, constructionContactForm } from '../data/construction'
-import { EMAILS, mailto } from '../data/contact'
+import { EMAILS } from '../data/contact'
+import { CONSTRUCTION_BOOKING_FORM } from '../data/links'
+import heroImg from '../assets/images/construction/hero.webp'
+import aboutImg from '../assets/images/construction/about.webp'
+import residentialImg from '../assets/images/construction/residential.webp'
+import commercialImg from '../assets/images/construction/commercial.webp'
+import architectureImg from '../assets/images/construction/architecture.webp'
+import renovationImg from '../assets/images/construction/renovation.webp'
+import interiorImg from '../assets/images/construction/interior.webp'
+import pmImg from '../assets/images/construction/pm.webp'
 
-/** /construction — FINAL §1 flow: About · Services · Booking (email) · Contact. Shared company template. */
+const SERVICE_IMG = [residentialImg, commercialImg, architectureImg, renovationImg, interiorImg, pmImg]
+
+/** /construction — About · Services · Booking (Google Form) · Contact. Shared company template. */
 export default function Construction() {
-  const bookingHref = mailto(EMAILS.construction, 'Consultation request — Infyro Construction')
   const preset = usePresetFromUrl('project', constructionContactForm)
   return (
     <>
       <Seo page="construction" />
-      <CompanyHero brandKey="construction" label="Construction" title={hero.title} small={hero.small} primary={hero.primary} secondary={hero.secondary} image={hero.image} />
+      <CompanyHero
+        brandKey="construction"
+        title={hero.title}
+        small={hero.small}
+        primary={hero.primary}
+        secondary={hero.secondary}
+        image={heroImg}
+        imageAlt="An engineering team reviewing a construction site"
+      />
 
-      <AboutSplit n={2} eyebrow={about.title} lead={about.paragraphs[0]} paragraphs={[about.paragraphs[1]]} tiles={visionMission} closing={about.signoff} />
+      <AboutSplit
+        eyebrow={about.title}
+        lead={about.paragraphs[0]}
+        paragraphs={[about.paragraphs[1]]}
+        tiles={visionMission}
+        image={aboutImg}
+        imageAlt="Modern architecture against a clear sky"
+      />
 
       <ServiceGrid
-        n={3}
+        eyebrow="What We Do"
         title={services.title}
         tagline={services.tagline}
         intro={services.intro}
-        items={services.items.map((s) => ({ ...s, n: Number(s.n) }))}
-        hrefFor={(s) => `/construction?project=${encodeURIComponent(s.title)}#contact`}
-        closing={{ title: services.closing.title, sub: services.closing.sub, extra: services.closing.signoff }}
+        items={services.items.map((s, i) => ({ ...s, image: SERVICE_IMG[i] }))}
+        closing={{ title: services.closing.title, sub: services.closing.sub }}
       />
 
       <BookingBand
-        n={4}
         title={consultation.title}
         sub={consultation.sub}
         body={consultation.body}
         enquiry={{ title: consultation.enquiryTitle, body: consultation.enquiryBody }}
-        helper={consultation.helper}
-        button={consultation.button}
-        href={bookingHref}
+        helper={CONSTRUCTION_BOOKING_FORM ? consultation.helper : null}
+        button={CONSTRUCTION_BOOKING_FORM ? consultation.button : 'Send an Enquiry'}
+        href={CONSTRUCTION_BOOKING_FORM || '#contact'}
         signoff={consultation.signoff}
+        image={heroImg}
       />
 
       <ContactSplit
-        n={5}
         title={contact.title}
         tagline={contact.sub}
         lead={contact.body}
