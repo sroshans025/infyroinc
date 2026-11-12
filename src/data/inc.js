@@ -77,7 +77,6 @@ export const values = {
     { name: 'Customer Commitment', icon: HeartHandshake, text: "We put our clients' needs first and build lasting relationships founded on trust and reliability." },
     { name: 'Continuous Growth', icon: TrendingUp, text: 'We keep learning, improving and evolving — as individuals, as teams and as a business group.' },
   ],
-  closing: 'Infyro Inc. — Driven by Values. United by Vision.',
 }
 
 export const why = {

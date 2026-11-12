@@ -50,7 +50,6 @@ export default function Overview() {
         paragraphs={[overview.paragraphs[1]]}
         pills={overview.expertise}
         tiles={[{ label: overview.purpose.label.replace(':', ''), text: overview.purpose.text }]}
-        closing={[overview.closing]}
       />
 
       <ServiceGrid
@@ -59,7 +58,6 @@ export default function Overview() {
         title={pillars.title}
         intro={pillars.intro}
         items={pillars.items.map((p, i) => ({ ...p, image: PILLAR_IMG[i] }))}
-        closing={{ title: pillars.commitment.text, extra: pillars.commitment.label.replace(':', '') }}
       />
 
       <ProgramSection
@@ -91,7 +89,6 @@ export default function Overview() {
         asideTitle={contact.connectTitle}
         asideBody={contact.connectBody}
         socials={[{ key: 'instagram' }, { key: 'linkedin' }]}
-        signoff={[contact.signoff.name, ...contact.signoff.lines]}
       />
     </>
   )

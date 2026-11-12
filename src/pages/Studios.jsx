@@ -42,7 +42,6 @@ export default function Studios() {
         tagline={services.tagline}
         intro={services.intro}
         items={services.items.map((s, i) => ({ ...s, image: SERVICE_IMG[i] }))}
-        closing={{ title: services.closing.title, sub: services.closing.sub }}
       />
 
       <BookingBand
@@ -52,7 +51,6 @@ export default function Studios() {
         button={STUDIOS_BOOKING_FORM ? book.button : 'Send an Enquiry'}
         href={STUDIOS_BOOKING_FORM || '#contact'}
         note={book.note}
-        signoff={[book.signoff]}
         image={bookingImg}
       />
 
@@ -70,7 +68,6 @@ export default function Studios() {
           { key: 'linkedin', label: contact.linkedinLabel },
         ]}
         below={contact.below}
-        signoff={contact.signoff}
       />
     </>
   )

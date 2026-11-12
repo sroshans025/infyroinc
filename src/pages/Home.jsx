@@ -1,4 +1,4 @@
-import { ArrowRight, Mail, Phone } from 'lucide-react'
+import { ArrowRight, Building2, Camera, Cpu, Mail, Phone } from 'lucide-react'
 import Seo from '../components/layout/Seo'
 import Section from '../components/ui/Section'
 import SectionHeading from '../components/ui/SectionHeading'
@@ -6,9 +6,8 @@ import SmartLink from '../components/ui/SmartLink'
 import Button, { ButtonGroup } from '../components/ui/Button'
 import Reveal from '../components/motion/Reveal'
 import Mark from '../components/brand/Mark'
-import BrandLogo from '../components/brand/BrandLogo'
-import LogoMarquee from '../components/home/LogoMarquee'
 import { BlockRise, Block } from '../components/precision/Primitives'
+import FeatureCard from '../components/precision/FeatureCard'
 import { hero, about, companies, values, visionMission, why, workTogether } from '../data/inc'
 import { PHONE, EMAILS } from '../data/contact'
 import techImg from '../assets/images/home/tech.webp'
@@ -22,6 +21,7 @@ import constructionPillarImg from '../assets/images/construction/architecture.we
 
 const COMPANY_IMG = { tech: techImg, studios: studiosImg, construction: constructionImg }
 const PILLAR_IMG = { tech: techPillarImg, studios: studiosPillarImg, construction: constructionPillarImg }
+const COMPANY_ICON = { tech: Cpu, studios: Camera, construction: Building2 }
 
 /* Hero — the logo is the focus: large mark + group name, one headline, one line, two buttons. */
 function Hero() {
@@ -52,32 +52,26 @@ function CompanyCards() {
     <Section id="companies" labelledBy="companies-title">
       <SectionHeading id="companies-title" eyebrow={companies.eyebrow} title={companies.title} />
       <BlockRise as="ul" className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3 lg:mt-12">
-        {companies.items.map((c) => (
+        {companies.items.map((c, i) => (
           <Block as="li" key={c.key}>
-            <article className="group relative isolate flex h-full min-h-[440px] flex-col justify-end overflow-hidden rounded-card bg-navy shadow-soft transition-shadow duration-300 hover:shadow-soft-lg md:min-h-[480px]">
-              <img
-                src={COMPANY_IMG[c.key]}
-                alt=""
-                loading="lazy"
-                decoding="async"
-                className="absolute inset-0 -z-10 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-              />
-              <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-[#060B16] via-[#060B16]/80 to-[#060B16]/5" />
-              <div className="p-6 md:p-7">
-                <h3>
-                  <BrandLogo brand={c.key} size="nav" tone="light" />
-                </h3>
-                <p className="mt-4 text-[15px] font-semibold text-[#7DB8FF]">{c.tagline}</p>
-                <p className="mt-2 text-[14px] leading-[1.65] text-white/80">{c.description}</p>
+            <FeatureCard
+              accent={i}
+              image={COMPANY_IMG[c.key]}
+              icon={COMPANY_ICON[c.key]}
+              title={c.name}
+              kicker={c.tagline}
+              footer={
                 <SmartLink
                   href={c.href}
-                  className="mt-5 inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-[13px] font-semibold text-ink after:absolute after:inset-0 after:content-['']"
+                  className="inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-[13px] font-semibold text-ink after:absolute after:inset-0 after:content-['']"
                 >
                   {c.cta}
                   <ArrowRight aria-hidden="true" className="h-4 w-4" />
                 </SmartLink>
-              </div>
-            </article>
+              }
+            >
+              {c.description}
+            </FeatureCard>
           </Block>
         ))}
       </BlockRise>
@@ -110,18 +104,11 @@ function About() {
       </div>
 
       <BlockRise as="ul" className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
-        {about.pillars.map((p) => (
+        {about.pillars.map((p, i) => (
           <Block as="li" key={p.key}>
-            <div className="flex h-full flex-col overflow-hidden rounded-card bg-white shadow-soft">
-              <img src={PILLAR_IMG[p.key]} alt="" loading="lazy" decoding="async" className="aspect-[16/8] w-full object-cover" />
-              <div className="p-6">
-                <h3 className="flex items-center gap-2.5 text-[16px] font-semibold text-ink">
-                  <span aria-hidden="true" className="h-5 w-1 rounded-full bg-brand" />
-                  {p.label}
-                </h3>
-                <p className="mt-3 text-[14px] leading-[1.7] text-muted">{p.text}</p>
-              </div>
-            </div>
+            <FeatureCard accent={i} image={PILLAR_IMG[p.key]} icon={COMPANY_ICON[p.key]} title={p.label}>
+              {p.text}
+            </FeatureCard>
           </Block>
         ))}
       </BlockRise>
@@ -136,20 +123,14 @@ function About() {
 /* Vision & Mission — compact cards on a dark band. */
 function VisionMission() {
   return (
-    <Section id="vision" tone="dark" labelledBy="vision-title">
+    <Section id="vision" tone="navy" labelledBy="vision-title">
       <SectionHeading id="vision-title" eyebrow="Our Direction" title="Vision & Mission" tone="light" />
       <BlockRise as="ul" className="mx-auto mt-10 grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-2">
-        {visionMission.map(({ label, text, icon: Icon }) => (
+        {visionMission.map(({ label, text, icon }, i) => (
           <Block as="li" key={label}>
-            <div className="h-full rounded-card border border-white/10 bg-white/[0.04] p-7 md:p-8">
-              <div className="flex items-center gap-3">
-                <span className="grid h-11 w-11 place-items-center rounded-[10px] bg-brand">
-                  <Icon aria-hidden="true" className="h-5 w-5 text-white" strokeWidth={1.75} />
-                </span>
-                <h3 className="text-[20px] font-semibold !text-white">{label}</h3>
-              </div>
-              <p className="mt-5 text-[16px] leading-[1.75] text-white/80 md:text-[17px]">{text}</p>
-            </div>
+            <FeatureCard accent={i} icon={icon} title={label}>
+              {text}
+            </FeatureCard>
           </Block>
         ))}
       </BlockRise>
@@ -163,19 +144,14 @@ function Values() {
     <Section id="values" labelledBy="values-title">
       <SectionHeading id="values-title" eyebrow="What We Stand For" title={values.title} lead={values.intro} />
       <BlockRise as="ul" className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:mt-12 lg:grid-cols-3">
-        {values.items.map((v) => (
+        {values.items.map((v, i) => (
           <Block as="li" key={v.name}>
-            <div className="group h-full rounded-card border border-line bg-white p-6 shadow-soft transition-shadow duration-300 hover:shadow-soft-lg md:p-7">
-              <span className="grid h-12 w-12 place-items-center rounded-[12px] bg-gradient-to-br from-[#0A78F2] to-[#0052AD] shadow-lift">
-                <v.icon aria-hidden="true" className="h-5 w-5 text-white" strokeWidth={1.75} />
-              </span>
-              <h3 className="mt-5 text-[17px] font-semibold text-ink">{v.name}</h3>
-              <p className="mt-2 text-[14px] leading-[1.7] text-muted">{v.text}</p>
-            </div>
+            <FeatureCard accent={i} icon={v.icon} title={v.name}>
+              {v.text}
+            </FeatureCard>
           </Block>
         ))}
       </BlockRise>
-      <p className="mt-10 text-center text-[16px] font-semibold text-ink">{values.closing}</p>
     </Section>
   )
 }
@@ -248,7 +224,6 @@ export default function Home() {
     <>
       <Seo page="home" />
       <Hero />
-      <LogoMarquee />
       <CompanyCards />
       <About />
       <VisionMission />

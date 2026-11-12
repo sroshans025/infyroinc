@@ -45,12 +45,6 @@ export default {
         soft: '0 1px 2px rgba(10,20,40,.05), 0 10px 30px -14px rgba(10,20,40,.16)',
         'soft-lg': '0 2px 4px rgba(10,20,40,.05), 0 24px 48px -20px rgba(10,20,40,.28)',
       },
-      keyframes: {
-        marquee: { from: { transform: 'translateX(0)' }, to: { transform: 'translateX(-50%)' } },
-      },
-      animation: {
-        marquee: 'marquee 45s linear infinite',
-      },
       transitionTimingFunction: {
         apple: 'cubic-bezier(0.22, 1, 0.36, 1)',
       },

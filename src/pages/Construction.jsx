@@ -48,7 +48,6 @@ export default function Construction() {
         tagline={services.tagline}
         intro={services.intro}
         items={services.items.map((s, i) => ({ ...s, image: SERVICE_IMG[i] }))}
-        closing={{ title: services.closing.title, sub: services.closing.sub }}
       />
 
       <BookingBand
@@ -59,7 +58,6 @@ export default function Construction() {
         helper={CONSTRUCTION_BOOKING_FORM ? consultation.helper : null}
         button={CONSTRUCTION_BOOKING_FORM ? consultation.button : 'Send an Enquiry'}
         href={CONSTRUCTION_BOOKING_FORM || '#contact'}
-        signoff={consultation.signoff}
         image={heroImg}
       />
 
@@ -73,7 +71,6 @@ export default function Construction() {
         preset={preset}
         asideTitle={contact.getInTouch}
         below={contact.below}
-        signoff={contact.signoff}
       />
     </>
   )

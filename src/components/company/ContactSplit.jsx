@@ -6,6 +6,7 @@ import ContactForm from '../forms/ContactForm'
 import ContactPanel from '../sections/ContactPanel'
 import PCard from '../precision/PCard'
 import { BlockRise, Block } from '../precision/Primitives'
+import { CARD_SURFACE, accentAt } from '../precision/FeatureCard'
 
 /** Tech "How Can We Help You?" tiles — toggle buttons that pre-select the Enquiry Type. */
 function HelpTiles({ title, tiles, selected, onSelect }) {
@@ -13,22 +14,28 @@ function HelpTiles({ title, tiles, selected, onSelect }) {
     <div className="mb-12">
       <h3 className="t-h3 text-center">{title}</h3>
       <BlockRise as="ul" className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {tiles.map((h) => {
+        {tiles.map((h, i) => {
           const on = selected === h.type
           return (
             <Block as="li" key={h.type}>
-              <PCard as="button" type="button" aria-pressed={on} onClick={() => onSelect(h.type)} className={`flex h-full w-full flex-col p-6 text-left transition-colors hover:border-line-strong ${on ? '!border-brand ring-1 ring-brand' : ''}`}>
+              <button
+                type="button"
+                aria-pressed={on}
+                onClick={() => onSelect(h.type)}
+                className={`${CARD_SURFACE} flex h-full w-full flex-col p-6 text-left transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-soft-lg ${on ? '!ring-2 !ring-[#3B95F5]' : ''}`}
+              >
+                <span aria-hidden="true" className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${accentAt(i).bar}`} />
                 <span className="flex items-start justify-between">
-                  <span className={`grid h-10 w-10 place-items-center rounded-[10px] ${on ? 'bg-brand' : 'bg-navy'}`}>
-                    <h.icon aria-hidden="true" className={`h-5 w-5 ${on ? 'text-white' : 'text-[#5AA9FF]'}`} strokeWidth={1.75} />
+                  <span className={`grid h-12 w-12 place-items-center rounded-[12px] bg-gradient-to-br text-white shadow-lg ${accentAt(i).badge}`}>
+                    <h.icon aria-hidden="true" className="h-5 w-5" strokeWidth={1.75} />
                   </span>
-                  <span aria-hidden="true" className={`grid h-6 w-6 place-items-center rounded-full ${on ? 'bg-[#0A78F2] text-white' : 'text-transparent ring-1 ring-inset ring-line'}`}>
+                  <span aria-hidden="true" className={`grid h-6 w-6 place-items-center rounded-full ${on ? 'bg-[#0A78F2] text-white' : 'text-transparent ring-1 ring-inset ring-white/25'}`}>
                     <Check className="h-3.5 w-3.5" strokeWidth={2.5} />
                   </span>
                 </span>
-                <span className="t-h4 mt-5 block">{h.title}</span>
-                <span className="mt-2 block text-[14px] leading-[1.7] text-muted">{h.text}</span>
-              </PCard>
+                <span className="mt-5 block text-[18px] font-semibold text-white">{h.title}</span>
+                <span className="mt-3 block text-[14px] leading-[1.7] text-white/70">{h.text}</span>
+              </button>
             </Block>
           )
         })}
@@ -43,7 +50,7 @@ function HelpTiles({ title, tiles, selected, onSelect }) {
  */
 export default function ContactSplit({
   id = 'contact', title, tagline, lead, formTitle, formIntro, form, inbox, preset, help,
-  asideTitle, asideBody, socials, below, signoff = [], tone = 'alt',
+  asideTitle, asideBody, socials, below, tone = 'alt',
 }) {
   return (
     <>
@@ -72,16 +79,6 @@ export default function ContactSplit({
             </Reveal>
           </div>
         </div>
-        {signoff.length > 0 && (
-          <div className="mt-12 text-center">
-            <p className="text-[16px] font-semibold text-ink">{signoff[0]}</p>
-            {signoff.slice(1).map((l) => (
-              <p key={l} className="mt-1 text-[14px] text-muted">
-                {l}
-              </p>
-            ))}
-          </div>
-        )}
       </Section>
     </>
   )

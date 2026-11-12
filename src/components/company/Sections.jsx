@@ -1,4 +1,5 @@
-import { Check } from 'lucide-react'
+import { Check, Sparkles } from 'lucide-react'
+import FeatureCard, { CARD_SURFACE, accentAt } from '../precision/FeatureCard'
 import Section from '../ui/Section'
 import SectionHeading from '../ui/SectionHeading'
 import Button, { ButtonGroup } from '../ui/Button'
@@ -10,26 +11,18 @@ import { BlockRise, Block } from '../precision/Primitives'
 function AboutTiles({ tiles, cols }) {
   return (
     <BlockRise as="ul" className={`grid grid-cols-1 gap-4 ${cols}`}>
-      {tiles.map(({ label, text, icon: Icon }) => (
+      {tiles.map(({ label, text, icon }, i) => (
         <Block as="li" key={label}>
-          <div className="h-full rounded-card bg-white p-6 shadow-soft">
-            <div className="flex items-center gap-3">
-              {Icon && (
-                <span className="grid h-9 w-9 place-items-center rounded-[10px] bg-navy">
-                  <Icon aria-hidden="true" className="h-4 w-4 text-[#5AA9FF]" strokeWidth={1.75} />
-                </span>
-              )}
-              <h3 className="t-eyebrow text-brand-ink">{label}</h3>
-            </div>
-            <p className="mt-3 text-[15px] font-medium leading-[1.65] text-ink">{text}</p>
-          </div>
+          <FeatureCard accent={i} icon={icon || Sparkles} title={label}>
+            {text}
+          </FeatureCard>
         </Block>
       ))}
     </BlockRise>
   )
 }
 
-export function AboutSplit({ id = 'about', kicker = 'Who We Are', eyebrow, lead, paragraphs = [], tiles = [], pills, closing = [], tone = 'alt', image, imageAlt = '' }) {
+export function AboutSplit({ id = 'about', kicker = 'Who We Are', eyebrow, lead, paragraphs = [], tiles = [], pills, tone = 'alt', image, imageAlt = '' }) {
   // Two or more statement cards (e.g. Vision + Mission) sit under the text, so neither column looks empty;
   // a single card stays under the photo.
   const short = tiles.length > 1
@@ -72,52 +65,24 @@ export function AboutSplit({ id = 'about', kicker = 'Who We Are', eyebrow, lead,
           {!short && tiles.length > 0 && <AboutTiles tiles={tiles} cols={tiles.length > 1 ? 'sm:grid-cols-2 lg:grid-cols-1' : ''} />}
         </div>
       </div>
-      {closing.length > 0 && (
-        <div className="mt-12 text-center">
-          <p className="text-[16px] font-semibold text-ink">{closing[0]}</p>
-          {closing.slice(1).map((l) => (
-            <p key={l} className="mt-1 text-[14px] text-muted">
-              {l}
-            </p>
-          ))}
-        </div>
-      )}
     </Section>
   )
 }
 
 /* ───────── ServiceGrid: 3×2 cards — photo, icon + title, description ───────── */
-export function ServiceGrid({ id = 'services', eyebrow = 'Services', title, tagline, intro, items, closing, tone = 'white' }) {
+export function ServiceGrid({ id = 'services', eyebrow = 'Services', title, tagline, intro, items, tone = 'white' }) {
   return (
     <Section id={id} tone={tone} labelledBy={`${id}-title`}>
       <SectionHeading id={`${id}-title`} eyebrow={eyebrow} title={title} tagline={tagline} lead={intro} />
       <BlockRise as="ul" className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:mt-12 lg:grid-cols-3">
-        {items.map((s) => (
+        {items.map((s, i) => (
           <Block as="li" key={s.title}>
-            <article className="group flex h-full flex-col overflow-hidden rounded-card bg-white shadow-soft transition-shadow duration-300 hover:shadow-soft-lg">
-              {s.image && (
-                <div className="overflow-hidden">
-                  <img src={s.image} alt="" loading="lazy" decoding="async" className="aspect-[16/9] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]" />
-                </div>
-              )}
-              <div className="relative flex flex-1 flex-col px-6 pb-6 pt-9">
-                <span className={`absolute left-6 grid h-12 w-12 place-items-center rounded-[12px] bg-gradient-to-br from-[#0A78F2] to-[#0052AD] shadow-lift ring-4 ring-white ${s.image ? '-top-6' : 'top-6'}`}>
-                  <s.icon aria-hidden="true" className="h-5 w-5 text-white" strokeWidth={1.75} />
-                </span>
-                <h3 className={`t-h4 ${s.image ? '' : 'mt-12'}`}>{s.title}</h3>
-                <p className="mt-2 text-[14px] leading-[1.7] text-muted">{s.text}</p>
-              </div>
-            </article>
+            <FeatureCard accent={i} image={s.image} icon={s.icon} title={s.title}>
+              {s.text}
+            </FeatureCard>
           </Block>
         ))}
       </BlockRise>
-      {closing && (
-        <div className="mx-auto mt-12 max-w-3xl text-center">
-          <p className="text-[18px] font-semibold text-ink md:text-[20px]">{closing.title}</p>
-          {closing.sub && <p className="mt-2 text-[15px] text-muted">{closing.sub}</p>}
-          {closing.extra && <p className="mt-2 text-[14px] font-medium text-brand-ink">{closing.extra}</p>}
-        </div>
-      )}
     </Section>
   )
 }
@@ -148,12 +113,11 @@ export function ProgramSection({ id, label, data, tone = 'alt', extra, image, im
       </h3>
       {/* Tablet/desktop: cards · mobile: accordion */}
       <BlockRise as="ul" id={`${id}-items`} aria-labelledby={`${id}-items-title`} className="mt-6 hidden grid-cols-2 gap-5 md:grid lg:grid-cols-3">
-        {data.domains.map((d) => (
+        {data.domains.map((d, i) => (
           <Block as="li" key={d.title}>
-            <div className="h-full rounded-card border-l-4 border-l-brand bg-white p-6 shadow-soft">
-              <h4 className="t-h4">{d.title}</h4>
-              <p className="mt-2 text-[14px] leading-[1.7] text-muted">{d.text}</p>
-            </div>
+            <FeatureCard as="div" accent={i} badge={String(i + 1).padStart(2, '0')} title={d.title} titleAs="h4">
+              {d.text}
+            </FeatureCard>
           </Block>
         ))}
       </BlockRise>
@@ -166,26 +130,28 @@ export function ProgramSection({ id, label, data, tone = 'alt', extra, image, im
       </div>
 
       <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-12">
-        <div className="rounded-card bg-white p-6 shadow-soft md:p-8 lg:col-span-7">
-          <h3 className="t-h4">{data.approachTitle}</h3>
+        <div className={`${CARD_SURFACE} p-6 md:p-8 lg:col-span-7`}>
+          <span aria-hidden="true" className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${accentAt(0).bar}`} />
+          <h3 className="text-[18px] font-semibold !text-white">{data.approachTitle}</h3>
           <ul className="mt-4 grid grid-cols-1 gap-x-8 sm:grid-cols-2">
             {data.approach.map((a) => (
-              <li key={a} className="flex items-start gap-3 border-t border-line py-3">
-                <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-blue-50">
-                  <Check aria-hidden="true" className="h-3.5 w-3.5 text-brand-ink" strokeWidth={2.5} />
+              <li key={a} className="flex items-start gap-3 border-t border-white/10 py-3">
+                <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#0A78F2]">
+                  <Check aria-hidden="true" className="h-3.5 w-3.5 text-white" strokeWidth={2.5} />
                 </span>
-                <span className="text-[14px] leading-snug text-ink">{a}</span>
+                <span className="text-[14px] leading-snug text-white/85">{a}</span>
               </li>
             ))}
           </ul>
         </div>
-        <div className="flex flex-col rounded-card bg-white p-6 shadow-soft md:p-8 lg:col-span-5">
-          <h3 className="t-h4">{data.audienceTitle}</h3>
-          <p className="mt-3 text-[14px] leading-[1.7] text-ink-2">{data.audience}</p>
+        <div className={`${CARD_SURFACE} flex flex-col p-6 md:p-8 lg:col-span-5`}>
+          <span aria-hidden="true" className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${accentAt(1).bar}`} />
+          <h3 className="text-[18px] font-semibold !text-white">{data.audienceTitle}</h3>
+          <p className="mt-3 text-[14px] leading-[1.7] text-white/70">{data.audience}</p>
           {data.audienceChips?.length > 0 && (
             <ul className="mt-5 flex flex-wrap gap-2" aria-label={data.audienceTitle}>
               {data.audienceChips.map((c) => (
-                <li key={c} className="rounded-full bg-blue-50 px-3 py-1.5 text-[13px] font-medium text-brand-ink">
+                <li key={c} className="rounded-full bg-white/10 px-3 py-1.5 text-[13px] font-medium text-white">
                   {c}
                 </li>
               ))}
@@ -194,7 +160,7 @@ export function ProgramSection({ id, label, data, tone = 'alt', extra, image, im
         </div>
       </div>
 
-      <Reveal className="mt-8 rounded-card bg-navy p-8 md:p-10">
+      <Reveal className="mt-8 rounded-card bg-[#0B0D12] p-8 ring-1 ring-white/10 md:p-10">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-2xl">
             <h3 className="text-[24px] font-bold leading-tight !text-white md:text-[28px]">{data.cta.title}</h3>
@@ -209,7 +175,7 @@ export function ProgramSection({ id, label, data, tone = 'alt', extra, image, im
 }
 
 /* ───────── BookingBand: dark band with a short pitch and the booking button ───────── */
-export function BookingBand({ title, sub, body, enquiry, helper, button, href, note, signoff = [], image }) {
+export function BookingBand({ title, sub, body, enquiry, helper, button, href, note, image }) {
   return (
     <section id="booking" aria-labelledby="booking-title" className="relative overflow-hidden bg-navy">
       {image && (
@@ -240,12 +206,6 @@ export function BookingBand({ title, sub, body, enquiry, helper, button, href, n
             )}
           </Reveal>
         </div>
-        {signoff.length > 0 && (
-          <div className="mt-12 border-t border-white/10 pt-8 text-center">
-            <p className="text-[15px] font-semibold text-white">{signoff[0]}</p>
-            {signoff[1] && <p className="mt-1 text-[13px] text-white/60">{signoff[1]}</p>}
-          </div>
-        )}
       </div>
     </section>
   )
