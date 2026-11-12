@@ -23,9 +23,8 @@ function AboutTiles({ tiles, cols }) {
 }
 
 export function AboutSplit({ id = 'about', kicker = 'Who We Are', eyebrow, lead, paragraphs = [], tiles = [], pills, tone = 'alt', image, imageAlt = '' }) {
-  // Two or more statement cards (e.g. Vision + Mission) sit under the text, so neither column looks empty;
-  // a single card stays under the photo.
-  const short = tiles.length > 1
+  // Statement cards (e.g. Vision + Mission) sit under the text, so neither column looks empty.
+  const short = tiles.length > 0
   return (
     <Section id={id} tone={tone} labelledBy={`${id}-title`}>
       <div className={`grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14 ${short ? 'lg:items-center' : ''}`}>
@@ -56,14 +55,18 @@ export function AboutSplit({ id = 'about', kicker = 'Who We Are', eyebrow, lead,
             </div>
           )}
         </div>
-        <div className="flex flex-col gap-5 lg:col-span-5">
-          {image && (
-            <Reveal>
-              <img src={image} alt={imageAlt} loading="lazy" decoding="async" className={`w-full rounded-card object-cover shadow-soft ${short ? 'aspect-[4/3] lg:aspect-[4/5]' : 'aspect-[4/3]'}`} />
-            </Reveal>
-          )}
-          {!short && tiles.length > 0 && <AboutTiles tiles={tiles} cols={tiles.length > 1 ? 'sm:grid-cols-2 lg:grid-cols-1' : ''} />}
-        </div>
+        {image && (
+          <Reveal className="lg:col-span-5">
+            {/* With statement cards the photo is a tall 4:5 frame; without, it stretches to the height of the text. */}
+            <img
+              src={image}
+              alt={imageAlt}
+              loading="lazy"
+              decoding="async"
+              className={`w-full rounded-card object-cover shadow-soft ${short ? 'aspect-[4/3] lg:aspect-[4/5]' : 'aspect-[4/3] lg:aspect-auto lg:h-full lg:min-h-[360px]'}`}
+            />
+          </Reveal>
+        )}
       </div>
     </Section>
   )
@@ -160,7 +163,7 @@ export function ProgramSection({ id, label, data, tone = 'alt', extra, image, im
         </div>
       </div>
 
-      <Reveal className="mt-8 rounded-card bg-[#111827]/[0.86] p-8 ring-1 ring-white/10 md:p-10">
+      <Reveal className="mt-8 rounded-card bg-[#0F2346] p-8 ring-1 ring-white/10 md:p-10">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           <div className="max-w-2xl">
             <h3 className="text-[24px] font-bold leading-tight !text-white md:text-[28px]">{data.cta.title}</h3>

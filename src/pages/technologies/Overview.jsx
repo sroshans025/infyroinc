@@ -49,7 +49,6 @@ export default function Overview() {
         lead={overview.paragraphs[0]}
         paragraphs={[overview.paragraphs[1]]}
         pills={overview.expertise}
-        tiles={[{ label: overview.purpose.label.replace(':', ''), text: overview.purpose.text }]}
       />
 
       <ServiceGrid
