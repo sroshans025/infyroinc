@@ -1,5 +1,5 @@
 import { Check, Sparkles } from 'lucide-react'
-import FeatureCard, { CARD_SURFACE, accentAt } from '../precision/FeatureCard'
+import FeatureCard, { CARD_SURFACE } from '../precision/FeatureCard'
 import Section from '../ui/Section'
 import SectionHeading from '../ui/SectionHeading'
 import Button, { ButtonGroup } from '../ui/Button'
@@ -134,27 +134,25 @@ export function ProgramSection({ id, label, data, tone = 'alt', extra, image, im
 
       <div className="mt-8 grid grid-cols-1 gap-5 lg:grid-cols-12">
         <div className={`${CARD_SURFACE} p-6 md:p-8 lg:col-span-7`}>
-          <span aria-hidden="true" className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${accentAt(0).bar}`} />
-          <h3 className="text-[18px] font-semibold !text-white">{data.approachTitle}</h3>
+          <h3 className="text-[18px] font-semibold text-ink">{data.approachTitle}</h3>
           <ul className="mt-4 grid grid-cols-1 gap-x-8 sm:grid-cols-2">
             {data.approach.map((a) => (
-              <li key={a} className="flex items-start gap-3 border-t border-white/10 py-3">
+              <li key={a} className="flex items-start gap-3 border-t border-line py-3">
                 <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[#0A78F2]">
                   <Check aria-hidden="true" className="h-3.5 w-3.5 text-white" strokeWidth={2.5} />
                 </span>
-                <span className="text-[14px] leading-snug text-white/85">{a}</span>
+                <span className="text-[14px] leading-snug text-ink-2">{a}</span>
               </li>
             ))}
           </ul>
         </div>
         <div className={`${CARD_SURFACE} flex flex-col p-6 md:p-8 lg:col-span-5`}>
-          <span aria-hidden="true" className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${accentAt(1).bar}`} />
-          <h3 className="text-[18px] font-semibold !text-white">{data.audienceTitle}</h3>
-          <p className="mt-3 text-[14px] leading-[1.7] text-white/70">{data.audience}</p>
+          <h3 className="text-[18px] font-semibold text-ink">{data.audienceTitle}</h3>
+          <p className="mt-3 text-[14px] leading-[1.7] text-muted">{data.audience}</p>
           {data.audienceChips?.length > 0 && (
             <ul className="mt-5 flex flex-wrap gap-2" aria-label={data.audienceTitle}>
               {data.audienceChips.map((c) => (
-                <li key={c} className="rounded-full bg-white/10 px-3 py-1.5 text-[13px] font-medium text-white">
+                <li key={c} className="rounded-full bg-blue-50 px-3 py-1.5 text-[13px] font-medium text-brand-ink">
                   {c}
                 </li>
               ))}

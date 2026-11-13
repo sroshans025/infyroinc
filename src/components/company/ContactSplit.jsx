@@ -6,7 +6,7 @@ import ContactForm from '../forms/ContactForm'
 import ContactPanel from '../sections/ContactPanel'
 import PCard from '../precision/PCard'
 import { BlockRise, Block } from '../precision/Primitives'
-import { CARD_SURFACE, accentAt } from '../precision/FeatureCard'
+import { CARD_SURFACE, Badge } from '../precision/FeatureCard'
 
 /** Tech "How Can We Help You?" tiles — toggle buttons that pre-select the Enquiry Type. */
 function HelpTiles({ title, tiles, selected, onSelect }) {
@@ -22,19 +22,16 @@ function HelpTiles({ title, tiles, selected, onSelect }) {
                 type="button"
                 aria-pressed={on}
                 onClick={() => onSelect(h.type)}
-                className={`${CARD_SURFACE} flex h-full w-full flex-col p-6 text-left transition-[transform,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-soft-lg ${on ? '!ring-2 !ring-[#3B95F5]' : ''}`}
+                className={`${CARD_SURFACE} flex h-full w-full flex-col p-6 text-left transition-[transform,box-shadow] duration-300 hover:shadow-soft-lg ${on ? '!border-brand ring-1 ring-brand' : ''}`}
               >
-                <span aria-hidden="true" className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${accentAt(i).bar}`} />
                 <span className="flex items-start justify-between">
-                  <span className={`grid h-12 w-12 place-items-center rounded-[12px] bg-gradient-to-br text-white shadow-lg ${accentAt(i).badge}`}>
-                    <h.icon aria-hidden="true" className="h-5 w-5" strokeWidth={1.75} />
-                  </span>
-                  <span aria-hidden="true" className={`grid h-6 w-6 place-items-center rounded-full ${on ? 'bg-[#0A78F2] text-white' : 'text-transparent ring-1 ring-inset ring-white/25'}`}>
+                  <Badge accent={i} icon={h.icon} />
+                  <span aria-hidden="true" className={`grid h-6 w-6 place-items-center rounded-full ${on ? 'bg-[#0A78F2] text-white' : 'text-transparent ring-1 ring-inset ring-line-strong'}`}>
                     <Check className="h-3.5 w-3.5" strokeWidth={2.5} />
                   </span>
                 </span>
-                <span className="mt-5 block text-[18px] font-semibold text-white">{h.title}</span>
-                <span className="mt-3 block text-[14px] leading-[1.7] text-white/70">{h.text}</span>
+                <span className="mt-5 block text-[18px] font-semibold text-ink">{h.title}</span>
+                <span className="mt-3 block text-[14px] leading-[1.7] text-muted">{h.text}</span>
               </button>
             </Block>
           )

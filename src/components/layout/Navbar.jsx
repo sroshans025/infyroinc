@@ -121,7 +121,7 @@ export default function Navbar({ brand }) {
   return (
     <header
       ref={headerRef}
-      className={`fixed inset-x-0 top-0 z-50 border-b border-line bg-white transition-shadow duration-200 ${scrolled || menu ? 'shadow-[0_1px_12px_rgba(10,20,40,0.06)]' : ''}`}
+      className={`fixed inset-x-0 top-0 z-50 border-b border-line/70 bg-white/75 backdrop-blur-md backdrop-saturate-150 transition-shadow duration-200 ${scrolled || menu ? 'shadow-[0_1px_12px_rgba(10,20,40,0.06)]' : ''}`}
     >
       <div className="container-content flex h-16 items-center justify-between gap-6 lg:grid lg:h-[72px] lg:grid-cols-[1fr_auto_1fr]">
         <SmartLink href={brand.path} aria-label={`${brand.name} home`} className="shrink-0 justify-self-start rounded-md">

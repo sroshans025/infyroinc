@@ -28,13 +28,10 @@ function CompanyCards() {
     <Section id="companies" tone="alt" labelledBy="companies-title">
       <SectionHeading id="companies-title" eyebrow={companies.eyebrow} title={companies.title} />
       <BlockRise as="ul" className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3 lg:mt-12">
-        {companies.items.map((c, i) => (
+        {companies.items.map((c) => (
           <Block as="li" key={c.key}>
             <article className="group relative flex h-full flex-col rounded-card border border-line bg-white p-7 shadow-soft transition-[border-color,box-shadow] duration-300 hover:border-line-strong hover:shadow-soft-lg">
-              <div className="flex items-start justify-between">
-                <FacetMark size={76} active={c.key} dim={0.22} />
-                <span className="font-mono text-[11px] text-subtle">{`0${i + 1}`}</span>
-              </div>
+              <FacetMark size={76} active={c.key} dim={0.22} />
               <h3 className="mt-6">
                 <BrandLogo brand={c.key} size="md" noMark />
               </h3>
